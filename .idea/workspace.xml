@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="added user Profile api , haulting user service for now">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="implemented activity service and track activity api added" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,61 +44,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="5.001886552746806E-7" />
-      <entry key="MS500" value="0.09362890390927912" />
-      <entry key="S2" value="0.9293262082183762" />
-      <entry key="S5" value="1.4717994778359818" />
-      <entry key="S10" value="1.7156678563934216" />
-      <entry key="S30" value="1.9003330077765448" />
-      <entry key="S60" value="1.9495289295361418" />
-      <entry key="M2" value="1.9746030228898792" />
-      <entry key="M5" value="1.9901968863438082" />
-      <entry key="M10" value="2.106209321034263" />
-      <entry key="M15" value="2.8210074424732747" />
-      <entry key="M30" value="9.414103503567421" />
-      <entry key="H1" value="32.41455213763211" />
-      <entry key="H2" value="76.63648819690347" />
-      <entry key="H4" value="127.32337694182559" />
-      <entry key="D1" value="214.12796898484805" />
-      <entry key="W1" value="239.27913298865562" />
+      <entry key="MS100" value="1.0058392913433079" />
+      <entry key="MS500" value="1.3979431635061974" />
+      <entry key="S2" value="2.764587799286974" />
+      <entry key="S5" value="5.510675084165715" />
+      <entry key="S10" value="8.977423792937392" />
+      <entry key="S30" value="13.93548527672213" />
+      <entry key="S60" value="15.790957913190182" />
+      <entry key="M2" value="16.846943883819286" />
+      <entry key="M5" value="17.526899398475077" />
+      <entry key="M10" value="17.870066133453857" />
+      <entry key="M15" value="18.652758112045376" />
+      <entry key="M30" value="25.28172950792708" />
+      <entry key="H1" value="48.264373145000235" />
+      <entry key="H2" value="92.4806176747534" />
+      <entry key="H4" value="143.19912765904712" />
+      <entry key="D1" value="230.094038580605" />
+      <entry key="W1" value="255.27373846596265" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.0" />
-      <entry key="S10" value="1.0" />
-      <entry key="S30" value="1.0" />
-      <entry key="S60" value="1.0000000000000056" />
-      <entry key="M2" value="1.0000000796208453" />
-      <entry key="M5" value="1.0026971253910386" />
-      <entry key="M10" value="1.2505082381597654" />
-      <entry key="M15" value="2.4802646532104315" />
-      <entry key="M30" value="11.122463987728512" />
-      <entry key="H1" value="29.628352068284055" />
-      <entry key="H2" value="51.22503612533808" />
-      <entry key="H4" value="70.95691875161246" />
-      <entry key="D1" value="115.72012031716547" />
-      <entry key="W1" value="133.4406626328905" />
+      <entry key="MS100" value="7.473735482858955E-58" />
+      <entry key="MS500" value="3.755843992560554E-12" />
+      <entry key="S2" value="0.0013921206837342224" />
+      <entry key="S5" value="0.07202292491144742" />
+      <entry key="S10" value="0.26837087195045495" />
+      <entry key="S30" value="0.6450278392330303" />
+      <entry key="S60" value="0.8031362519728746" />
+      <entry key="M2" value="0.8961787655739506" />
+      <entry key="M5" value="0.9596825891674358" />
+      <entry key="M10" value="1.223391560164859" />
+      <entry key="M15" value="2.4442782280728252" />
+      <entry key="M30" value="11.0414806556451" />
+      <entry key="H1" value="29.5202921006747" />
+      <entry key="H2" value="51.131537302214305" />
+      <entry key="H4" value="70.89213189123375" />
+      <entry key="D1" value="115.70250400109356" />
+      <entry key="W1" value="133.43776045049555" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.8294667805403365E-4" />
-      <entry key="MS500" value="0.2709164562763771" />
-      <entry key="S2" value="1.5757423602152454" />
-      <entry key="S5" value="2.3111960821484834" />
-      <entry key="S10" value="2.631758005143614" />
-      <entry key="S30" value="2.8715182153758625" />
-      <entry key="S60" value="2.9350131077341266" />
-      <entry key="M2" value="2.9673178675181395" />
-      <entry key="M5" value="2.989955325627176" />
-      <entry key="M10" value="3.3543182967428398" />
-      <entry key="M15" value="5.296392446765849" />
-      <entry key="M30" value="20.521788296429513" />
-      <entry key="H1" value="62.02158183649868" />
-      <entry key="H2" value="127.84239947355934" />
-      <entry key="H4" value="198.2668584179732" />
-      <entry key="D1" value="329.84451915002137" />
-      <entry key="W1" value="372.7192147667734" />
+      <entry key="MS100" value="0.9451631321333593" />
+      <entry key="MS500" value="1.3826607469376069" />
+      <entry key="S2" value="2.7586359657696" />
+      <entry key="S5" value="5.564868917527816" />
+      <entry key="S10" value="9.217250849455379" />
+      <entry key="S30" value="14.558361242302082" />
+      <entry key="S60" value="16.58034699822018" />
+      <entry key="M2" value="17.735460879176216" />
+      <entry key="M5" value="18.48329328077221" />
+      <entry key="M10" value="19.090868441824398" />
+      <entry key="M15" value="21.09206525203009" />
+      <entry key="M30" value="36.308457007548384" />
+      <entry key="H1" value="77.76337974503991" />
+      <entry key="H2" value="143.59304455881798" />
+      <entry key="H4" value="214.07782429795037" />
+      <entry key="D1" value="345.792971264595" />
+      <entry key="W1" value="388.71091783020813" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -217,7 +211,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785061514933</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="implemented activity service and track activity api added">
+      <option name="closed" value="true" />
+      <created>1785100603307</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1785100603308</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,16 +227,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added user Profile api , haulting user service for now" />
-    <option name="LAST_COMMIT_MESSAGE" value="added user Profile api , haulting user service for now" />
+    <MESSAGE value="implemented activity service and track activity api added" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented activity service and track activity api added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/controller/ActivityController.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/service/ActivityService.java</url>
           <line>18</line>
