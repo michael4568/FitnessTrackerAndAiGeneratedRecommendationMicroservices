@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="">
+    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="added user Profile api , haulting user service for now">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,28 +19,28 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
         <option value="Exception" />
+        <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "michael4568"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;michael4568&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/michael4568/FitnessTrackerAndAiGeneratedRecommendationMicroservices.git",
-    "accountId": "5b043c2f-bcae-4c2e-bf50-93c35231242c"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/michael4568/FitnessTrackerAndAiGeneratedRecommendationMicroservices.git&quot;,
+    &quot;accountId&quot;: &quot;5b043c2f-bcae-4c2e-bf50-93c35231242c&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -48,61 +50,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="5.685370081906821E-66" />
-      <entry key="MS500" value="8.944637170722183E-14" />
-      <entry key="S2" value="6.843100846490802E-4" />
-      <entry key="S5" value="0.099243973360773" />
-      <entry key="S10" value="0.6018690132820702" />
-      <entry key="S30" value="2.2009949557403528" />
-      <entry key="S60" value="4.315122548318116" />
-      <entry key="M2" value="13.380966443907758" />
-      <entry key="M5" value="47.57593002000594" />
-      <entry key="M10" value="78.74633309803332" />
-      <entry key="M15" value="93.75766033502134" />
-      <entry key="M30" value="111.94402319428286" />
-      <entry key="H1" value="122.44515424670304" />
-      <entry key="H2" value="128.4978409236023" />
-      <entry key="H4" value="134.53890604074812" />
-      <entry key="D1" value="154.49563662932732" />
-      <entry key="W1" value="162.43733475024808" />
+      <entry key="MS100" value="5.001886552746806E-7" />
+      <entry key="MS500" value="0.09362890390927912" />
+      <entry key="S2" value="0.9293262082183762" />
+      <entry key="S5" value="1.4717994778359818" />
+      <entry key="S10" value="1.7156678563934216" />
+      <entry key="S30" value="1.9003330077765448" />
+      <entry key="S60" value="1.9495289295361418" />
+      <entry key="M2" value="1.9746030228898792" />
+      <entry key="M5" value="1.9901968863438082" />
+      <entry key="M10" value="2.106209321034263" />
+      <entry key="M15" value="2.8210074424732747" />
+      <entry key="M30" value="9.414103503567421" />
+      <entry key="H1" value="32.41455213763211" />
+      <entry key="H2" value="76.63648819690347" />
+      <entry key="H4" value="127.32337694182559" />
+      <entry key="D1" value="214.12796898484805" />
+      <entry key="W1" value="239.27913298865562" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0000130825200901" />
-      <entry key="S2" value="1.0601770110486208" />
-      <entry key="S5" value="1.3414774322316498" />
-      <entry key="S10" value="1.6989343595841804" />
-      <entry key="S30" value="2.340835223271023" />
-      <entry key="S60" value="2.8359921542525237" />
-      <entry key="M2" value="4.139328765397913" />
-      <entry key="M5" value="7.081785503338421" />
-      <entry key="M10" value="9.071265389378468" />
-      <entry key="M15" value="9.92402775645633" />
-      <entry key="M30" value="10.894641008293622" />
-      <entry key="H1" value="11.436875561043706" />
-      <entry key="H2" value="12.286074281878157" />
-      <entry key="H4" value="16.88787114677355" />
-      <entry key="D1" value="42.63208336258981" />
-      <entry key="W1" value="53.78281624537153" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.0" />
+      <entry key="S30" value="1.0" />
+      <entry key="S60" value="1.0000000000000056" />
+      <entry key="M2" value="1.0000000796208453" />
+      <entry key="M5" value="1.0026971253910386" />
+      <entry key="M10" value="1.2505082381597654" />
+      <entry key="M15" value="2.4802646532104315" />
+      <entry key="M30" value="11.122463987728512" />
+      <entry key="H1" value="29.628352068284055" />
+      <entry key="H2" value="51.22503612533808" />
+      <entry key="H4" value="70.95691875161246" />
+      <entry key="D1" value="115.72012031716547" />
+      <entry key="W1" value="133.4406626328905" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.003239529475837663" />
-      <entry key="MS500" value="0.31776222599974796" />
-      <entry key="S2" value="0.7968353757524428" />
-      <entry key="S5" value="1.2844034909660738" />
-      <entry key="S10" value="2.173555009866626" />
-      <entry key="S30" value="4.458761962276068" />
-      <entry key="S60" value="7.079229685529369" />
-      <entry key="M2" value="17.436169297919985" />
-      <entry key="M5" value="54.581196070498414" />
-      <entry key="M10" value="87.76499031689288" />
-      <entry key="M15" value="103.64252544497651" />
-      <entry key="M30" value="122.81675689065999" />
-      <entry key="H1" value="133.8704310064372" />
-      <entry key="H2" value="140.77776968289524" />
-      <entry key="H4" value="151.42296580205405" />
-      <entry key="D1" value="197.12641409497508" />
-      <entry key="W1" value="216.21992309140586" />
+      <entry key="MS100" value="1.8294667805403365E-4" />
+      <entry key="MS500" value="0.2709164562763771" />
+      <entry key="S2" value="1.5757423602152454" />
+      <entry key="S5" value="2.3111960821484834" />
+      <entry key="S10" value="2.631758005143614" />
+      <entry key="S30" value="2.8715182153758625" />
+      <entry key="S60" value="2.9350131077341266" />
+      <entry key="M2" value="2.9673178675181395" />
+      <entry key="M5" value="2.989955325627176" />
+      <entry key="M10" value="3.3543182967428398" />
+      <entry key="M15" value="5.296392446765849" />
+      <entry key="M30" value="20.521788296429513" />
+      <entry key="H1" value="62.02158183649868" />
+      <entry key="H2" value="127.84239947355934" />
+      <entry key="H4" value="198.2668584179732" />
+      <entry key="D1" value="329.84451915002137" />
+      <entry key="W1" value="372.7192147667734" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -113,32 +115,83 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Spring Boot.UserServiceApplication.executor": "Run",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/rasha/OneDrive/Desktop/FitnessTrackerAndSuggestionsMicroservice",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "to.speed.mode.migration.done": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ActivityServiceFitnessApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.UserServiceFitnessApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ActivityService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ActivityService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ActivityServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.UserServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/rasha/OneDrive/Desktop/FitnessTrackerAndSuggestionsMicroservice/ActivityService/src/main/java/com/fitness/ActivityService&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.fitness.ActivityService.dto" />
+      <recent name="com.fitness.ActivityService.model" />
       <recent name="com.FitnessApp.UserService.model" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\rasha\OneDrive\Desktop\FitnessTrackerAndSuggestionsMicroservice\ActivityService\src\main\java\com\fitness\ActivityService" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="Application" />
+      </set>
+    </option>
+    <option name="configurationStatuses">
+      <map>
+        <entry key="Application">
+          <value>
+            <map>
+              <entry key="ActivityServiceFitnessApplication" value="STOPPED" />
+              <entry key="UserServiceFitnessApplication" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.ActivityServiceFitnessApplication">
+    <configuration name="ActivityServiceFitnessApplication" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.fitness.ActivityService.ActivityServiceApplication" />
+      <module name="ActivityService" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ActivityService" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceFitnessApplication" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="25" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.FitnessApp.UserService.UserServiceApplication" />
+      <module name="UserService" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/UserService" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -156,9 +209,43 @@
       <option name="presentableId" value="Default" />
       <updated>1785014703019</updated>
     </task>
+    <task id="LOCAL-00001" summary="added user Profile api , haulting user service for now">
+      <option name="closed" value="true" />
+      <created>1785061514933</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1785061514933</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added user Profile api , haulting user service for now" />
+    <option name="LAST_COMMIT_MESSAGE" value="added user Profile api , haulting user service for now" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/controller/ActivityController.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/service/ActivityService.java</url>
+          <line>18</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="this" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
