@@ -3,6 +3,7 @@ package com.FitnessApp.UserService.service;
 import com.FitnessApp.UserService.dto.RegisterRequest;
 import com.FitnessApp.UserService.dto.UserResponse;
 import com.FitnessApp.UserService.exception.UniqueEmailConstraintException;
+import com.FitnessApp.UserService.exception.UserNotFoundException;
 import com.FitnessApp.UserService.model.User;
 import com.FitnessApp.UserService.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,15 @@ public class UserService {
         userResponse.setCreatedAt(savedUser.getCreatedAt());
         userResponse.setUpdatedAt(savedUser.getUpdatedAt());
         return userResponse;
+    }
+
+    public UserResponse getUser(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException("no user exist with id : " + userId)
+        );
+        return MapToResponse(user);
+
+
+
     }
 }

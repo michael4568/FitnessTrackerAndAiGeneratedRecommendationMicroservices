@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="" />
+    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/service/UserService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,6 +24,21 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "michael4568"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/michael4568/FitnessTrackerAndAiGeneratedRecommendationMicroservices.git",
+    "accountId": "5b043c2f-bcae-4c2e-bf50-93c35231242c"
+  }
+}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -29,61 +48,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0000000000002747" />
-      <entry key="MS500" value="1.0053160181353604" />
-      <entry key="S2" value="1.4539672719953274" />
-      <entry key="S5" value="2.1051373841695495" />
-      <entry key="S10" value="2.4870381545801465" />
-      <entry key="S30" value="2.9200236859067803" />
-      <entry key="S60" value="3.367389224048562" />
-      <entry key="M2" value="3.926942838402915" />
-      <entry key="M5" value="4.691028544849068" />
-      <entry key="M10" value="5.9267141822579" />
-      <entry key="M15" value="7.731349804590681" />
-      <entry key="M30" value="13.047802511171977" />
-      <entry key="H1" value="19.086969596302826" />
-      <entry key="H2" value="23.735418145372787" />
-      <entry key="H4" value="26.633574438075215" />
-      <entry key="D1" value="29.40325747511937" />
-      <entry key="W1" value="29.91383312233038" />
+      <entry key="MS100" value="5.685370081906821E-66" />
+      <entry key="MS500" value="8.944637170722183E-14" />
+      <entry key="S2" value="6.843100846490802E-4" />
+      <entry key="S5" value="0.099243973360773" />
+      <entry key="S10" value="0.6018690132820702" />
+      <entry key="S30" value="2.2009949557403528" />
+      <entry key="S60" value="4.315122548318116" />
+      <entry key="M2" value="13.380966443907758" />
+      <entry key="M5" value="47.57593002000594" />
+      <entry key="M10" value="78.74633309803332" />
+      <entry key="M15" value="93.75766033502134" />
+      <entry key="M30" value="111.94402319428286" />
+      <entry key="H1" value="122.44515424670304" />
+      <entry key="H2" value="128.4978409236023" />
+      <entry key="H4" value="134.53890604074812" />
+      <entry key="D1" value="154.49563662932732" />
+      <entry key="W1" value="162.43733475024808" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="1.593916012690725E-291" />
-      <entry key="S5" value="4.79718175700817E-117" />
-      <entry key="S10" value="6.926169039958648E-59" />
-      <entry key="S30" value="4.1067453429711396E-20" />
-      <entry key="S60" value="2.0283916621856169E-10" />
-      <entry key="M2" value="1.583224047881926E-5" />
-      <entry key="M5" value="0.04897616608629498" />
-      <entry key="M10" value="1.3304158111759947" />
-      <entry key="M15" value="4.199725443899797" />
-      <entry key="M30" value="13.493651229973567" />
-      <entry key="H1" value="24.325134269545384" />
-      <entry key="H2" value="32.70222050241997" />
-      <entry key="H4" value="37.929020461187044" />
-      <entry key="D1" value="42.923970312980394" />
-      <entry key="W1" value="43.844630935485" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000130825200901" />
+      <entry key="S2" value="1.0601770110486208" />
+      <entry key="S5" value="1.3414774322316498" />
+      <entry key="S10" value="1.6989343595841804" />
+      <entry key="S30" value="2.340835223271023" />
+      <entry key="S60" value="2.8359921542525237" />
+      <entry key="M2" value="4.139328765397913" />
+      <entry key="M5" value="7.081785503338421" />
+      <entry key="M10" value="9.071265389378468" />
+      <entry key="M15" value="9.92402775645633" />
+      <entry key="M30" value="10.894641008293622" />
+      <entry key="H1" value="11.436875561043706" />
+      <entry key="H2" value="12.286074281878157" />
+      <entry key="H4" value="16.88787114677355" />
+      <entry key="D1" value="42.63208336258981" />
+      <entry key="W1" value="53.78281624537153" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.0683933563289038" />
-      <entry key="MS500" value="0.5878122632981516" />
-      <entry key="S2" value="1.2463857704918095" />
-      <entry key="S5" value="1.9628152604066735" />
-      <entry key="S10" value="2.397422672687372" />
-      <entry key="S30" value="2.8846567881739884" />
-      <entry key="S60" value="3.3487757587500897" />
-      <entry key="M2" value="3.9173342699685385" />
-      <entry key="M5" value="4.735592574190853" />
-      <entry key="M10" value="7.249935559461519" />
-      <entry key="M15" value="11.919108106170784" />
-      <entry key="M30" value="26.524009476236174" />
-      <entry key="H1" value="43.396741139096925" />
-      <entry key="H2" value="56.42739481794884" />
-      <entry key="H4" value="64.55667429845512" />
-      <entry key="D1" value="72.32611387676543" />
-      <entry key="W1" value="73.7583015806115" />
+      <entry key="MS100" value="0.003239529475837663" />
+      <entry key="MS500" value="0.31776222599974796" />
+      <entry key="S2" value="0.7968353757524428" />
+      <entry key="S5" value="1.2844034909660738" />
+      <entry key="S10" value="2.173555009866626" />
+      <entry key="S30" value="4.458761962276068" />
+      <entry key="S60" value="7.079229685529369" />
+      <entry key="M2" value="17.436169297919985" />
+      <entry key="M5" value="54.581196070498414" />
+      <entry key="M10" value="87.76499031689288" />
+      <entry key="M15" value="103.64252544497651" />
+      <entry key="M30" value="122.81675689065999" />
+      <entry key="H1" value="133.8704310064372" />
+      <entry key="H2" value="140.77776968289524" />
+      <entry key="H4" value="151.42296580205405" />
+      <entry key="D1" value="197.12641409497508" />
+      <entry key="W1" value="216.21992309140586" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -98,10 +117,12 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Spring Boot.UserServiceApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/rasha/OneDrive/Desktop/FitnessTrackerAndSuggestionsMicroservice",
