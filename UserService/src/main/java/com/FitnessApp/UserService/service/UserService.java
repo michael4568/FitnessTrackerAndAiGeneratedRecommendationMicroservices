@@ -50,4 +50,12 @@ public class UserService {
 
 
     }
+
+    public Boolean getUserbyId(String userId) {
+        User user = userRepository.findById(userId).orElse(
+                null
+        );
+        if(user == null) return false;
+        return true;
+    }
 }

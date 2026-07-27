@@ -28,6 +28,10 @@ public class UserController {
     public ResponseEntity<UserResponse> getUserProfile(@PathVariable String userId){
         return ResponseEntity.ok(userService.getUser(userId));
     }
+     @GetMapping("/validate/{userId}")
+        public ResponseEntity<Boolean> validateUser(@PathVariable String userId){
+            return ResponseEntity.ok(userService.getUserbyId(userId));
+        }
 
 
 }

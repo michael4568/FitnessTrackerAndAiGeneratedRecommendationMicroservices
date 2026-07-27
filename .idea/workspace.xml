@@ -4,17 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="implemented activity service and track activity api added">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="configured eureka server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ActivityService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ActivityService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ActivityService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ActivityService/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/config/webClientConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/config/webClientConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/service/ActivityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/service/ActivityService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,61 +50,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.00001547179382" />
-      <entry key="MS500" value="1.1091214306790964" />
-      <entry key="S2" value="1.612924189674851" />
-      <entry key="S5" value="2.245821433174608" />
-      <entry key="S10" value="3.1560833750328174" />
-      <entry key="S30" value="5.253814762009957" />
-      <entry key="S60" value="6.377361497844728" />
-      <entry key="M2" value="7.11271907191145" />
-      <entry key="M5" value="7.624766082518718" />
-      <entry key="M10" value="7.827406669874556" />
-      <entry key="M15" value="8.125020937893868" />
-      <entry key="M30" value="11.814083836203965" />
-      <entry key="H1" value="28.392017397875406" />
-      <entry key="H2" value="70.13054425424157" />
-      <entry key="H4" value="130.69404052109633" />
-      <entry key="D1" value="251.435298202958" />
-      <entry key="W1" value="288.08061721254813" />
+      <entry key="MS100" value="1.9090381096017667E-42" />
+      <entry key="MS500" value="6.528641813446223E-9" />
+      <entry key="S2" value="0.018725888409444582" />
+      <entry key="S5" value="0.4011300982424305" />
+      <entry key="S10" value="1.224589098995759" />
+      <entry key="S30" value="3.195690428183377" />
+      <entry key="S60" value="4.856542700265463" />
+      <entry key="M2" value="8.26241160508647" />
+      <entry key="M5" value="16.50726943807042" />
+      <entry key="M10" value="24.479510356700008" />
+      <entry key="M15" value="29.563750126394222" />
+      <entry key="M30" value="39.69517488556249" />
+      <entry key="H1" value="53.579237870081954" />
+      <entry key="H2" value="75.4700810398596" />
+      <entry key="H4" value="122.82186086710325" />
+      <entry key="D1" value="299.8983220368426" />
+      <entry key="W1" value="372.48388172636555" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="0.0" />
-      <entry key="S5" value="0.0" />
-      <entry key="S10" value="1.7479786295040082E-206" />
-      <entry key="S30" value="2.595247051101109E-69" />
-      <entry key="S60" value="5.094356731817212E-35" />
-      <entry key="M2" value="7.137476825217155E-18" />
-      <entry key="M5" value="1.3886335074887106E-7" />
-      <entry key="M10" value="4.653669024940559E-4" />
-      <entry key="M15" value="0.01283228453932242" />
-      <entry key="M30" value="0.8000257888358312" />
-      <entry key="H1" value="7.94619074441533" />
-      <entry key="H2" value="26.528214346481583" />
-      <entry key="H4" value="51.0631521692276" />
-      <entry key="D1" value="109.54545290289006" />
-      <entry key="W1" value="132.3994300075532" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000000307683086" />
+      <entry key="S2" value="1.014775457972603" />
+      <entry key="S5" value="1.3388180848777365" />
+      <entry key="S10" value="2.3064494060657292" />
+      <entry key="S30" value="5.104007678058365" />
+      <entry key="S60" value="7.24473081580573" />
+      <entry key="M2" value="10.408968388000131" />
+      <entry key="M5" value="16.666875005356687" />
+      <entry key="M10" value="21.107641263950416" />
+      <entry key="M15" value="23.17056817588138" />
+      <entry key="M30" value="26.710077474215996" />
+      <entry key="H1" value="31.66745180846266" />
+      <entry key="H2" value="39.870967396196725" />
+      <entry key="H4" value="58.286633823358535" />
+      <entry key="D1" value="136.74443851390154" />
+      <entry key="W1" value="174.94187194526376" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.7955464122053538" />
-      <entry key="MS500" value="1.0551398658918631" />
-      <entry key="S2" value="1.5873626495573612" />
-      <entry key="S5" value="2.222722054103331" />
-      <entry key="S10" value="3.1276015328146483" />
-      <entry key="S30" value="5.228545997600773" />
-      <entry key="S60" value="6.360418447721127" />
-      <entry key="M2" value="7.102842545834851" />
-      <entry key="M5" value="7.620425633397556" />
-      <entry key="M10" value="7.825622199907416" />
-      <entry key="M15" value="8.136242793146272" />
-      <entry key="M30" value="12.611789680555466" />
-      <entry key="H1" value="36.33121376162907" />
-      <entry key="H2" value="96.64781403053252" />
-      <entry key="H4" value="181.74684192690987" />
-      <entry key="D1" value="360.97722807301164" />
-      <entry key="W1" value="420.4794495607292" />
+      <entry key="MS100" value="0.003239529475837663" />
+      <entry key="MS500" value="0.31775793124683027" />
+      <entry key="S2" value="0.7762658814887203" />
+      <entry key="S5" value="1.5536462293126867" />
+      <entry key="S10" value="3.3343543175274597" />
+      <entry key="S30" value="8.142464025641884" />
+      <entry key="S60" value="11.977016253630064" />
+      <entry key="M2" value="18.559813807464064" />
+      <entry key="M5" value="33.08546014669815" />
+      <entry key="M10" value="45.525545859570045" />
+      <entry key="M15" value="52.68724619492643" />
+      <entry key="M30" value="66.37682020153007" />
+      <entry key="H1" value="85.22969466435674" />
+      <entry key="H2" value="115.3300335415636" />
+      <entry key="H4" value="181.0996048570737" />
+      <entry key="D1" value="436.63884135322905" />
+      <entry key="W1" value="547.4250303022378" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -265,7 +260,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785100669570</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="configured eureka server">
+      <option name="closed" value="true" />
+      <created>1785166528870</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1785166528870</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,18 +277,10 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added user Profile api , haulting user service for now" />
     <MESSAGE value="implemented activity service and track activity api added" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented activity service and track activity api added" />
+    <MESSAGE value="configured eureka server" />
+    <option name="LAST_COMMIT_MESSAGE" value="configured eureka server" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/service/ActivityService.java</url>
-          <line>18</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="this" />

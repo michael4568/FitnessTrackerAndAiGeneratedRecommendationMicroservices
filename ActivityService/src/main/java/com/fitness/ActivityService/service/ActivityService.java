@@ -14,8 +14,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ActivityService {
     private final ActivityRepository activityRepository;
+    private  final userValidationService userValidationService;
     public ActivityResponse trackActivity(ActivityRequest activityRequest) {
-
+        String userId = activityRequest.getUserId();
+        if(!userValidationService.validateUser(userId)){
+            throw new UserNotFoundException("no user exist with Id: " + userId + " or a server error occured");
+        }
         Activity activity = Activity.builder().
                 userId(activityRequest.getUserId()).activityType(activityRequest.getActivityType()).
                 startTime(activityRequest.getStartTime()).
