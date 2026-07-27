@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="implemented activity service and track activity api added" />
+    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="implemented activity service and track activity api added">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ActivityService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ActivityService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ActivityService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ActivityService/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,61 +55,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0058392913433079" />
-      <entry key="MS500" value="1.3979431635061974" />
-      <entry key="S2" value="2.764587799286974" />
-      <entry key="S5" value="5.510675084165715" />
-      <entry key="S10" value="8.977423792937392" />
-      <entry key="S30" value="13.93548527672213" />
-      <entry key="S60" value="15.790957913190182" />
-      <entry key="M2" value="16.846943883819286" />
-      <entry key="M5" value="17.526899398475077" />
-      <entry key="M10" value="17.870066133453857" />
-      <entry key="M15" value="18.652758112045376" />
-      <entry key="M30" value="25.28172950792708" />
-      <entry key="H1" value="48.264373145000235" />
-      <entry key="H2" value="92.4806176747534" />
-      <entry key="H4" value="143.19912765904712" />
-      <entry key="D1" value="230.094038580605" />
-      <entry key="W1" value="255.27373846596265" />
+      <entry key="MS100" value="1.00001547179382" />
+      <entry key="MS500" value="1.1091214306790964" />
+      <entry key="S2" value="1.612924189674851" />
+      <entry key="S5" value="2.245821433174608" />
+      <entry key="S10" value="3.1560833750328174" />
+      <entry key="S30" value="5.253814762009957" />
+      <entry key="S60" value="6.377361497844728" />
+      <entry key="M2" value="7.11271907191145" />
+      <entry key="M5" value="7.624766082518718" />
+      <entry key="M10" value="7.827406669874556" />
+      <entry key="M15" value="8.125020937893868" />
+      <entry key="M30" value="11.814083836203965" />
+      <entry key="H1" value="28.392017397875406" />
+      <entry key="H2" value="70.13054425424157" />
+      <entry key="H4" value="130.69404052109633" />
+      <entry key="D1" value="251.435298202958" />
+      <entry key="W1" value="288.08061721254813" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="7.473735482858955E-58" />
-      <entry key="MS500" value="3.755843992560554E-12" />
-      <entry key="S2" value="0.0013921206837342224" />
-      <entry key="S5" value="0.07202292491144742" />
-      <entry key="S10" value="0.26837087195045495" />
-      <entry key="S30" value="0.6450278392330303" />
-      <entry key="S60" value="0.8031362519728746" />
-      <entry key="M2" value="0.8961787655739506" />
-      <entry key="M5" value="0.9596825891674358" />
-      <entry key="M10" value="1.223391560164859" />
-      <entry key="M15" value="2.4442782280728252" />
-      <entry key="M30" value="11.0414806556451" />
-      <entry key="H1" value="29.5202921006747" />
-      <entry key="H2" value="51.131537302214305" />
-      <entry key="H4" value="70.89213189123375" />
-      <entry key="D1" value="115.70250400109356" />
-      <entry key="W1" value="133.43776045049555" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="1.7479786295040082E-206" />
+      <entry key="S30" value="2.595247051101109E-69" />
+      <entry key="S60" value="5.094356731817212E-35" />
+      <entry key="M2" value="7.137476825217155E-18" />
+      <entry key="M5" value="1.3886335074887106E-7" />
+      <entry key="M10" value="4.653669024940559E-4" />
+      <entry key="M15" value="0.01283228453932242" />
+      <entry key="M30" value="0.8000257888358312" />
+      <entry key="H1" value="7.94619074441533" />
+      <entry key="H2" value="26.528214346481583" />
+      <entry key="H4" value="51.0631521692276" />
+      <entry key="D1" value="109.54545290289006" />
+      <entry key="W1" value="132.3994300075532" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9451631321333593" />
-      <entry key="MS500" value="1.3826607469376069" />
-      <entry key="S2" value="2.7586359657696" />
-      <entry key="S5" value="5.564868917527816" />
-      <entry key="S10" value="9.217250849455379" />
-      <entry key="S30" value="14.558361242302082" />
-      <entry key="S60" value="16.58034699822018" />
-      <entry key="M2" value="17.735460879176216" />
-      <entry key="M5" value="18.48329328077221" />
-      <entry key="M10" value="19.090868441824398" />
-      <entry key="M15" value="21.09206525203009" />
-      <entry key="M30" value="36.308457007548384" />
-      <entry key="H1" value="77.76337974503991" />
-      <entry key="H2" value="143.59304455881798" />
-      <entry key="H4" value="214.07782429795037" />
-      <entry key="D1" value="345.792971264595" />
-      <entry key="W1" value="388.71091783020813" />
+      <entry key="MS100" value="0.7955464122053538" />
+      <entry key="MS500" value="1.0551398658918631" />
+      <entry key="S2" value="1.5873626495573612" />
+      <entry key="S5" value="2.222722054103331" />
+      <entry key="S10" value="3.1276015328146483" />
+      <entry key="S30" value="5.228545997600773" />
+      <entry key="S60" value="6.360418447721127" />
+      <entry key="M2" value="7.102842545834851" />
+      <entry key="M5" value="7.620425633397556" />
+      <entry key="M10" value="7.825622199907416" />
+      <entry key="M15" value="8.136242793146272" />
+      <entry key="M30" value="12.611789680555466" />
+      <entry key="H1" value="36.33121376162907" />
+      <entry key="H2" value="96.64781403053252" />
+      <entry key="H4" value="181.74684192690987" />
+      <entry key="D1" value="360.97722807301164" />
+      <entry key="W1" value="420.4794495607292" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -109,35 +120,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ActivityServiceFitnessApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.UserServiceFitnessApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ActivityService [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ActivityService [compile].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ActivityServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.UserServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/rasha/OneDrive/Desktop/FitnessTrackerAndSuggestionsMicroservice/ActivityService/src/main/java/com/fitness/ActivityService&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ActivityServiceFitnessApplication.executor": "Run",
+    "Application.EurekaService.executor": "Run",
+    "Application.UserServiceFitnessApplication.executor": "Run",
+    "Maven.ActivityService [clean].executor": "Run",
+    "Maven.ActivityService [compile].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.ActivityServiceApplication.executor": "Run",
+    "Spring Boot.EurekaApplication.executor": "Run",
+    "Spring Boot.UserServiceApplication.executor": "Run",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/rasha/OneDrive/Desktop/FitnessTrackerAndSuggestionsMicroservice/ActivityService/src/main/java/com/fitness/ActivityService",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
+    "to.speed.mode.migration.done": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.fitness.ActivityService.dto" />
@@ -160,6 +176,7 @@
           <value>
             <map>
               <entry key="ActivityServiceFitnessApplication" value="STOPPED" />
+              <entry key="EurekaService" value="STOPPED" />
               <entry key="UserServiceFitnessApplication" value="STOPPED" />
             </map>
           </value>
@@ -167,11 +184,18 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ActivityServiceFitnessApplication">
+  <component name="RunManager" selected="Application.UserServiceFitnessApplication">
     <configuration name="ActivityServiceFitnessApplication" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.fitness.ActivityService.ActivityServiceApplication" />
       <module name="ActivityService" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ActivityService" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurekaService" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.fitness.eureka.EurekaApplication" />
+      <module name="eureka" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -182,6 +206,20 @@
       <option name="MAIN_CLASS_NAME" value="com.FitnessApp.UserService.UserServiceApplication" />
       <module name="UserService" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/UserService" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurekaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="eureka" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fitness.eureka.EurekaApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.fitness.eureka.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -219,7 +257,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785100603308</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="implemented activity service and track activity api added">
+      <option name="closed" value="true" />
+      <created>1785100669570</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1785100669570</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

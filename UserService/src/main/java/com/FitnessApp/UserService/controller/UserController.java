@@ -6,6 +6,8 @@ import com.FitnessApp.UserService.model.User;
 import com.FitnessApp.UserService.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
