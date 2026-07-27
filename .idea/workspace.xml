@@ -4,12 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="configured eureka server">
+    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="implemented interservice communication by web client to validate user for track activity">
+      <change afterPath="$PROJECT_DIR$/aiService/src/main/java/com/fitness/aiService/exception/ActivityNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aiService/src/main/java/com/fitness/aiService/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aiService/src/main/java/com/fitness/aiService/exception/UniqueEmailConstraintException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aiService/src/main/java/com/fitness/aiService/exception/UserNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/config/webClientConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/config/webClientConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/service/ActivityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ActivityService/src/main/java/com/fitness/ActivityService/service/ActivityService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/FitnessApp/UserService/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,61 +53,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.9090381096017667E-42" />
-      <entry key="MS500" value="6.528641813446223E-9" />
-      <entry key="S2" value="0.018725888409444582" />
-      <entry key="S5" value="0.4011300982424305" />
-      <entry key="S10" value="1.224589098995759" />
-      <entry key="S30" value="3.195690428183377" />
-      <entry key="S60" value="4.856542700265463" />
-      <entry key="M2" value="8.26241160508647" />
-      <entry key="M5" value="16.50726943807042" />
-      <entry key="M10" value="24.479510356700008" />
-      <entry key="M15" value="29.563750126394222" />
-      <entry key="M30" value="39.69517488556249" />
-      <entry key="H1" value="53.579237870081954" />
-      <entry key="H2" value="75.4700810398596" />
-      <entry key="H4" value="122.82186086710325" />
-      <entry key="D1" value="299.8983220368426" />
-      <entry key="W1" value="372.48388172636555" />
+      <entry key="MS100" value="3.163745288323967E-172" />
+      <entry key="MS500" value="5.313680685225135E-35" />
+      <entry key="S2" value="3.978332298599362E-9" />
+      <entry key="S5" value="6.523251121865082E-4" />
+      <entry key="S10" value="0.03657398252498418" />
+      <entry key="S30" value="0.6059715037167761" />
+      <entry key="S60" value="1.3211910220056018" />
+      <entry key="M2" value="2.3525581086921967" />
+      <entry key="M5" value="7.5047845320855675" />
+      <entry key="M10" value="16.561600252022036" />
+      <entry key="M15" value="23.58352338597962" />
+      <entry key="M30" value="40.49990891271451" />
+      <entry key="H1" value="68.38759459955767" />
+      <entry key="H2" value="108.24206080126531" />
+      <entry key="H4" value="168.28889604508382" />
+      <entry key="D1" value="378.1843011278998" />
+      <entry key="W1" value="468.6214057987444" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0000000307683086" />
-      <entry key="S2" value="1.014775457972603" />
-      <entry key="S5" value="1.3388180848777365" />
-      <entry key="S10" value="2.3064494060657292" />
-      <entry key="S30" value="5.104007678058365" />
-      <entry key="S60" value="7.24473081580573" />
-      <entry key="M2" value="10.408968388000131" />
-      <entry key="M5" value="16.666875005356687" />
-      <entry key="M10" value="21.107641263950416" />
-      <entry key="M15" value="23.17056817588138" />
-      <entry key="M30" value="26.710077474215996" />
-      <entry key="H1" value="31.66745180846266" />
-      <entry key="H2" value="39.870967396196725" />
-      <entry key="H4" value="58.286633823358535" />
-      <entry key="D1" value="136.74443851390154" />
-      <entry key="W1" value="174.94187194526376" />
+      <entry key="MS100" value="1.0000440652220313" />
+      <entry key="MS500" value="1.1345300155979772" />
+      <entry key="S2" value="1.6058517639507175" />
+      <entry key="S5" value="1.8535614817448325" />
+      <entry key="S10" value="2.1152330367867256" />
+      <entry key="S30" value="3.038784749036713" />
+      <entry key="S60" value="4.199845966032391" />
+      <entry key="M2" value="5.717825214604341" />
+      <entry key="M5" value="9.801948718910776" />
+      <entry key="M10" value="16.00351695845523" />
+      <entry key="M15" value="20.66216873727345" />
+      <entry key="M30" value="30.31746854013956" />
+      <entry key="H1" value="43.31294203749863" />
+      <entry key="H2" value="60.2436288112396" />
+      <entry key="H4" value="84.6440979242159" />
+      <entry key="D1" value="176.41572943971798" />
+      <entry key="W1" value="222.21699481917872" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.003239529475837663" />
-      <entry key="MS500" value="0.31775793124683027" />
-      <entry key="S2" value="0.7762658814887203" />
-      <entry key="S5" value="1.5536462293126867" />
-      <entry key="S10" value="3.3343543175274597" />
-      <entry key="S30" value="8.142464025641884" />
-      <entry key="S60" value="11.977016253630064" />
-      <entry key="M2" value="18.559813807464064" />
-      <entry key="M5" value="33.08546014669815" />
-      <entry key="M10" value="45.525545859570045" />
-      <entry key="M15" value="52.68724619492643" />
-      <entry key="M30" value="66.37682020153007" />
-      <entry key="H1" value="85.22969466435674" />
-      <entry key="H2" value="115.3300335415636" />
-      <entry key="H4" value="181.0996048570737" />
-      <entry key="D1" value="436.63884135322905" />
-      <entry key="W1" value="547.4250303022378" />
+      <entry key="MS100" value="0.0036956261670219467" />
+      <entry key="MS500" value="0.36508716407548825" />
+      <entry key="S2" value="1.1998794359639706" />
+      <entry key="S5" value="1.6478489796210332" />
+      <entry key="S10" value="2.0196809541131047" />
+      <entry key="S30" value="3.524506548157446" />
+      <entry key="S60" value="5.408345544310855" />
+      <entry key="M2" value="7.977698017821943" />
+      <entry key="M5" value="17.220346228863665" />
+      <entry key="M10" value="32.48543471321665" />
+      <entry key="M15" value="44.17502695371572" />
+      <entry key="M30" value="70.76457271804749" />
+      <entry key="H1" value="111.66375179168735" />
+      <entry key="H2" value="168.46133929070618" />
+      <entry key="H4" value="252.91649940224795" />
+      <entry key="D1" value="554.5944795630311" />
+      <entry key="W1" value="690.8374118927088" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -118,6 +121,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.ActivityServiceFitnessApplication.executor": "Run",
+    "Application.AiServiceFitnessApplication.executor": "Run",
     "Application.EurekaService.executor": "Run",
     "Application.UserServiceFitnessApplication.executor": "Run",
     "Maven.ActivityService [clean].executor": "Run",
@@ -136,7 +140,7 @@
     "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/rasha/OneDrive/Desktop/FitnessTrackerAndSuggestionsMicroservice/ActivityService/src/main/java/com/fitness/ActivityService",
+    "last_opened_file_path": "C:/Users/rasha/OneDrive/Desktop/FitnessTrackerAndSuggestionsMicroservice/aiService/src/main/java/com/fitness/aiService",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -151,11 +155,14 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.fitness.aiService.repository" />
+      <recent name="com.fitness.aiService.service" />
       <recent name="com.fitness.ActivityService.dto" />
       <recent name="com.fitness.ActivityService.model" />
       <recent name="com.FitnessApp.UserService.model" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\rasha\OneDrive\Desktop\FitnessTrackerAndSuggestionsMicroservice\aiService\src\main\java\com\fitness\aiService" />
       <recent name="C:\Users\rasha\OneDrive\Desktop\FitnessTrackerAndSuggestionsMicroservice\ActivityService\src\main\java\com\fitness\ActivityService" />
     </key>
   </component>
@@ -171,6 +178,7 @@
           <value>
             <map>
               <entry key="ActivityServiceFitnessApplication" value="STOPPED" />
+              <entry key="AiServiceFitnessApplication" value="STOPPED" />
               <entry key="EurekaService" value="STOPPED" />
               <entry key="UserServiceFitnessApplication" value="STOPPED" />
             </map>
@@ -179,11 +187,20 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Application.UserServiceFitnessApplication">
+  <component name="RunManager" selected="Application.AiServiceFitnessApplication">
     <configuration name="ActivityServiceFitnessApplication" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.fitness.ActivityService.ActivityServiceApplication" />
       <module name="ActivityService" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ActivityService" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AiServiceFitnessApplication" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="25" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.fitness.aiService.AiServiceApplication" />
+      <module name="aiService" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -268,7 +285,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785166528870</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="implemented interservice communication by web client to validate user for track activity">
+      <option name="closed" value="true" />
+      <created>1785175889629</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1785175889629</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,7 +303,8 @@
     <MESSAGE value="added user Profile api , haulting user service for now" />
     <MESSAGE value="implemented activity service and track activity api added" />
     <MESSAGE value="configured eureka server" />
-    <option name="LAST_COMMIT_MESSAGE" value="configured eureka server" />
+    <MESSAGE value="implemented interservice communication by web client to validate user for track activity" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented interservice communication by web client to validate user for track activity" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

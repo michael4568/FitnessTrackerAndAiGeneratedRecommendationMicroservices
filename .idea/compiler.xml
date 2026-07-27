@@ -9,13 +9,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eureka" />
       </profile>
-      <profile name="Annotation profile for ActivityService" enabled="true">
+      <profile name="Annotation profile for aiService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
         </processorPath>
+        <module name="aiService" />
         <module name="UserService" />
         <module name="ActivityService" />
       </profile>
@@ -29,6 +30,7 @@
       <module name="ActivityService" options="-parameters" />
       <module name="UserService" options="-parameters" />
       <module name="Uservice" options="-parameters" />
+      <module name="aiService" options="-parameters" />
       <module name="eureka" options="-parameters" />
     </option>
   </component>
