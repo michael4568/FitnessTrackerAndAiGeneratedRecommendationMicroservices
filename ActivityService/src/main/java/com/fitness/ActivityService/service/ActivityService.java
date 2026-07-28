@@ -6,15 +6,21 @@ import com.fitness.ActivityService.exception.UserNotFoundException;
 import com.fitness.ActivityService.model.Activity;
 import com.fitness.ActivityService.repository.ActivityRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ActivityService {
     private final ActivityRepository activityRepository;
     private  final userValidationService userValidationService;
+    private final KafkaTemplate<String , Activity> kafkaTemplate;
+
+    @Value("${kafka.topic.name}")
+    private String topicName;
     public ActivityResponse trackActivity(ActivityRequest activityRequest) {
         String userId = activityRequest.getUserId();
         if(!userValidationService.validateUser(userId)){
@@ -28,6 +34,13 @@ public class ActivityService {
                 additionalMetrics(activityRequest.getAdditionalMetrics()).
                 build();
         Activity savedActivity = activityRepository.save(activity);
+        try {
+            kafkaTemplate.send(topicName, savedActivity.getId(), savedActivity);
+        } catch (Exception e) {
+            log.error("activity message was not sent to Kafka");
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
         return MapToResponse(savedActivity);
     }
 
