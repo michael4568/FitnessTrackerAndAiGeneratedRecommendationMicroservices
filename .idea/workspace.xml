@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="finalised consumer , saving ai generated recommendations to mongodb">
+      <change afterPath="$PROJECT_DIR$/configService/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configService/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configService/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configService/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configService/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configService/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configService/src/main/java/com/fitness/configService/ConfigServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configService/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configService/src/main/resources/config/activity-service.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configService/src/main/resources/config/ai-service.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configService/src/main/resources/config/user-service.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configService/src/test/java/com/fitness/configService/ConfigServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ActivityService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ActivityService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ActivityService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ActivityService/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aiService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/aiService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aiService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/aiService/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Exception" />
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;michael4568&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/michael4568/FitnessTrackerAndAiGeneratedRecommendationMicroservices.git&quot;,
+    &quot;accountId&quot;: &quot;5b043c2f-bcae-4c2e-bf50-93c35231242c&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.5056664350202014" />
+      <entry key="MS500" value="4.134023660109568" />
+      <entry key="S2" value="7.108357490250428" />
+      <entry key="S5" value="8.818074020441296" />
+      <entry key="S10" value="10.578646138197431" />
+      <entry key="S30" value="14.978586217389514" />
+      <entry key="S60" value="22.212094438819964" />
+      <entry key="M2" value="32.585673880039266" />
+      <entry key="M5" value="45.613788783603844" />
+      <entry key="M10" value="53.52034272817597" />
+      <entry key="M15" value="57.800027792453214" />
+      <entry key="M30" value="68.09828027385483" />
+      <entry key="H1" value="86.90411217773972" />
+      <entry key="H2" value="112.78291475033346" />
+      <entry key="H4" value="155.45282767058603" />
+      <entry key="D1" value="496.2806201804803" />
+      <entry key="W1" value="853.9927584437108" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="4.686888238725448E-236" />
+      <entry key="S10" value="2.16492222463659E-118" />
+      <entry key="S30" value="6.004554157804159E-40" />
+      <entry key="S60" value="2.450419180018831E-20" />
+      <entry key="M2" value="1.5653815050548205E-10" />
+      <entry key="M5" value="1.1998929817361056E-4" />
+      <entry key="M10" value="0.013435809031153113" />
+      <entry key="M15" value="0.10238069944911199" />
+      <entry key="M30" value="1.4536870571990714" />
+      <entry key="H1" value="6.915421342724691" />
+      <entry key="H2" value="17.337879652102085" />
+      <entry key="H4" value="36.1297664398041" />
+      <entry key="D1" value="184.01041214517412" />
+      <entry key="W1" value="343.67117723131605" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.4323549297142248" />
+      <entry key="MS500" value="4.062705279463937" />
+      <entry key="S2" value="7.073873047129629" />
+      <entry key="S5" value="8.800398985487876" />
+      <entry key="S10" value="10.567644249197139" />
+      <entry key="S30" value="14.970399412911037" />
+      <entry key="S60" value="22.200615771801367" />
+      <entry key="M2" value="32.5740874171555" />
+      <entry key="M5" value="45.606382034664335" />
+      <entry key="M10" value="53.5289758983899" />
+      <entry key="M15" value="57.89850799340368" />
+      <entry key="M30" value="69.54796507232173" />
+      <entry key="H1" value="93.81433815556612" />
+      <entry key="H2" value="130.11537508491838" />
+      <entry key="H4" value="191.5771662355533" />
+      <entry key="D1" value="680.2858199969355" />
+      <entry key="W1" value="1197.6624981498205" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="3H0pBAHPs3GoyinAlNYUhw4T9Co" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ActivityServiceFitnessApplication.executor": "Run",
+    "Application.AiServiceFitnessApplication.executor": "Run",
+    "Application.ConfigService.executor": "Run",
+    "Application.EurekaService.executor": "Run",
+    "Application.UserServiceFitnessApplication.executor": "Run",
+    "Maven.ActivityService [clean].executor": "Run",
+    "Maven.ActivityService [compile].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.ActivityServiceApplication.executor": "Run",
+    "Spring Boot.ConfigServiceApplication.executor": "Run",
+    "Spring Boot.EurekaApplication.executor": "Run",
+    "Spring Boot.UserServiceApplication.executor": "Run",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/rasha/OneDrive/Desktop/FitnessTrackerAndSuggestionsMicroservice/aiService/src/main/java/com/fitness/aiService/model",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
+    "to.speed.mode.migration.done": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.fitness.aiService.repository" />
+      <recent name="com.fitness.aiService.service" />
+      <recent name="com.fitness.ActivityService.dto" />
+      <recent name="com.fitness.ActivityService.model" />
+      <recent name="com.FitnessApp.UserService.model" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\rasha\OneDrive\Desktop\FitnessTrackerAndSuggestionsMicroservice\aiService\src\main\java\com\fitness\aiService\model" />
+      <recent name="C:\Users\rasha\OneDrive\Desktop\FitnessTrackerAndSuggestionsMicroservice\aiService\src\main\java\com\fitness\aiService" />
+      <recent name="C:\Users\rasha\OneDrive\Desktop\FitnessTrackerAndSuggestionsMicroservice\ActivityService\src\main\java\com\fitness\ActivityService" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="Application" />
+      </set>
+    </option>
+    <option name="configurationStatuses">
+      <map>
+        <entry key="Application">
+          <value>
+            <map>
+              <entry key="ActivityServiceFitnessApplication" value="STOPPED" />
+              <entry key="AiServiceFitnessApplication" value="STOPPED" />
+              <entry key="ConfigService" value="STOPPED" />
+              <entry key="EurekaService" value="STOPPED" />
+              <entry key="UserServiceFitnessApplication" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.ActivityServiceFitnessApplication">
+    <configuration name="ActivityServiceFitnessApplication" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.fitness.ActivityService.ActivityServiceApplication" />
+      <module name="ActivityService" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ActivityService" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AiServiceFitnessApplication" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="25" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.fitness.aiService.AiServiceApplication" />
+      <module name="aiService" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ConfigService" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="25" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.fitness.configService.ConfigServiceApplication" />
+      <module name="configService" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurekaService" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.fitness.eureka.EurekaApplication" />
+      <module name="eureka" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceFitnessApplication" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="25" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.FitnessApp.UserService.UserServiceApplication" />
+      <module name="UserService" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/UserService" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ConfigServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="configService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fitness.configService.ConfigServiceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.fitness.configService.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurekaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="eureka" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fitness.eureka.EurekaApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.fitness.eureka.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.ConfigService" />
+      <item itemvalue="Application.ActivityServiceFitnessApplication" />
+      <item itemvalue="Application.AiServiceFitnessApplication" />
+      <item itemvalue="Application.EurekaService" />
+      <item itemvalue="Application.UserServiceFitnessApplication" />
+      <item itemvalue="Spring Boot.ConfigServiceApplication" />
+      <item itemvalue="Spring Boot.EurekaApplication" />
+    </list>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="" />
+      <created>1785014703019</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1785014703019</updated>
+    </task>
+    <task id="LOCAL-00001" summary="added user Profile api , haulting user service for now">
+      <option name="closed" value="true" />
+      <created>1785061514933</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1785061514933</updated>
+    </task>
+    <task id="LOCAL-00002" summary="implemented activity service and track activity api added">
+      <option name="closed" value="true" />
+      <created>1785100603307</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1785100603308</updated>
+    </task>
+    <task id="LOCAL-00003" summary="implemented activity service and track activity api added">
+      <option name="closed" value="true" />
+      <created>1785100669570</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1785100669570</updated>
+    </task>
+    <task id="LOCAL-00004" summary="configured eureka server">
+      <option name="closed" value="true" />
+      <created>1785166528870</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1785166528870</updated>
+    </task>
+    <task id="LOCAL-00005" summary="implemented interservice communication by web client to validate user for track activity">
+      <option name="closed" value="true" />
+      <created>1785175889629</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1785175889629</updated>
+    </task>
+    <task id="LOCAL-00006" summary="implemented ai service and setup recommndation by user id and activity id api">
+      <option name="closed" value="true" />
+      <created>1785183838134</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1785183838134</updated>
+    </task>
+    <task id="LOCAL-00007" summary="configure activity service as kafka producer">
+      <option name="closed" value="true" />
+      <created>1785252900729</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1785252900729</updated>
+    </task>
+    <task id="LOCAL-00008" summary="configured ai service as kafka consumer and added gemini response for recommendation generation">
+      <option name="closed" value="true" />
+      <created>1785316472069</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1785316472069</updated>
+    </task>
+    <task id="LOCAL-00009" summary="finalised consumer , saving ai generated recommendations to mongodb">
+      <option name="closed" value="true" />
+      <created>1785352851996</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1785352851996</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added user Profile api , haulting user service for now" />
+    <MESSAGE value="implemented activity service and track activity api added" />
+    <MESSAGE value="configured eureka server" />
+    <MESSAGE value="implemented interservice communication by web client to validate user for track activity" />
+    <MESSAGE value="implemented ai service and setup recommndation by user id and activity id api" />
+    <MESSAGE value="configure activity service as kafka producer" />
+    <MESSAGE value="configured ai service as kafka consumer and added gemini response for recommendation generation" />
+    <MESSAGE value="finalised consumer , saving ai generated recommendations to mongodb" />
+    <option name="LAST_COMMIT_MESSAGE" value="finalised consumer , saving ai generated recommendations to mongodb" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="this" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
