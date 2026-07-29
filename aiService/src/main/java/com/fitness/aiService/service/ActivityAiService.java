@@ -1,20 +1,46 @@
 package com.fitness.aiService.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fitness.aiService.model.Activity;
+import com.fitness.aiService.model.Recommendation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ActivityAiService {
     private final GeminiService geminiService;
+    private final ObjectMapper objectMapper;
 
-    public void getResponseRecommendation(Activity activity){
+    public Recommendation getResponseRecommendation(Activity activity){
         String prompt = generatePrompt(activity);
-        log.info("Response from Api: " + geminiService.getRecommendation(prompt));
+        String AiResponse = geminiService.getRecommendation(prompt);
+        log.info("Response from Api: " + AiResponse);
+        Recommendation recommendation;
+        try {
+           recommendation = objectMapper.readValue(AiResponse, Recommendation.class);
+            log.info("recommendation object created: " + recommendation.toString());
+        }
+        catch(Exception e){
+            log.error("Failed to parse AI JSON. Creating default recommendation. Error: {}", e.getMessage());
+            recommendation = createDefaultRecommendation();
+        }
+        recommendation.setActivityId(activity.getId());
+        recommendation.setUserId(activity.getUserId());
+        if (activity.getActivityType() != null) {
+            recommendation.setType(activity.getActivityType().toString());
+        } else {
+            recommendation.setType("UNKNOWN");
+        }
+        log.info("recommendation object created: " + recommendation.toString());
+        return recommendation;
 
     }
 
@@ -73,6 +99,21 @@ public class ActivityAiService {
                 activity.getCaloriesBurned() != null ? activity.getCaloriesBurned() : 0,
                 metricsString
         );
+    }
+    private Recommendation createDefaultRecommendation() {
+        Recommendation.Analysis fallbackAnalysis = new Recommendation.Analysis();
+        fallbackAnalysis.setOverall("Workout logged successfully. AI analysis temporarily unavailable.");
+        fallbackAnalysis.setPace("N/A");
+        fallbackAnalysis.setHeartRate("N/A");
+        fallbackAnalysis.setCaloriesBurned("N/A");
+
+        return Recommendation.builder()
+                .analysis(fallbackAnalysis)
+                .recommendation("Great job completing your workout! Focus on hydration and recovery today.")
+                .improvements(List.of("Maintain consistent pacing.", "Ensure proper stretching."))
+                .safety(List.of("Listen to your body and rest if you feel unusual fatigue."))
+                .suggestions(List.of("Try a light recovery walk tomorrow."))
+                .build();
     }
 
 }

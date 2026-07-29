@@ -1,5 +1,6 @@
 package com.fitness.aiService.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,11 @@ public class GeminiService {
     private String geminiUrl;
 
     private final WebClient webClient;
+    private final ObjectMapper objectMapper; // Best practice: reuse a single ObjectMapper instance
 
-    // No-arg constructor prevents Spring BeanCreationException
-    public GeminiService() {
+    public GeminiService(ObjectMapper objectMapper) {
         this.webClient = WebClient.create();
+        this.objectMapper = objectMapper;
     }
 
     public String getRecommendation(String details) {
@@ -34,21 +36,41 @@ public class GeminiService {
         requestBody.put("model", "gemini-3.6-flash");
         requestBody.put("input", details);
 
-        String rawResponse = webClient.post()
+        return webClient.post()
                 .uri(geminiUrl)
                 .header("x-goog-api-key", geminiApiKey)
                 .header("Content-Type", "application/json")
                 .bodyValue(requestBody)
                 .retrieve()
                 .bodyToMono(String.class)
-                // Automatically retry up to 3 times with a 2-second delay if Google returns 503 (Overloaded) or 429 (Rate Limit)
+
+                // STEP 1: Unwrap the envelope immediately upon success
+                .map(rawResponse -> {
+                    try {
+                        String cleanJson = objectMapper.readTree(rawResponse)
+                                .findValue("text")
+                                .asText()
+                                .replace("```json", "") // Removes the opening Markdown tag
+                                .replace("```", "")     // Removes the closing Markdown tag
+                                .trim();                // Cleans up any leftover physical newlines or spaces at the top/bottom
+                        log.info("Clean Gemini Response:\n{}", cleanJson);
+                        return cleanJson;
+                    } catch (Exception e) {
+                        throw new RuntimeException("Failed to extract text from Gemini response", e);
+                    }
+                })
+
+                // STEP 2: Retry logic
                 .retryWhen(Retry.backoff(3, Duration.ofSeconds(2))
                         .filter(throwable -> throwable instanceof WebClientResponseException &&
                                 (((WebClientResponseException) throwable).getStatusCode().value() == 503 ||
                                         ((WebClientResponseException) throwable).getStatusCode().value() == 429)))
-                // Fallback to safe JSON if retries are exhausted or any other HTTP error occurs
+
+                // STEP 3: Fallback (Because of Step 1, this now expects Clean JSON, not Google JSON!)
                 .onErrorResume(e -> {
-                    log.error("Gemini API call failed after retries. Returning fallback recommendation. Root cause: {}", e.getMessage());
+                    log.error("Gemini API call failed. Returning fallback recommendation. Cause: {}", e.getMessage());
+
+
                     String fallbackJson = """
                             {
                               "analysis": {
@@ -72,19 +94,6 @@ public class GeminiService {
                             """;
                     return Mono.just(fallbackJson);
                 })
-                .block();
-        try {
-            String cleanJson = new com.fasterxml.jackson.databind.ObjectMapper()
-                    .readTree(rawResponse)
-                    .findValue("text")
-                    .asText();
-
-
-            log.info("Clean Gemini Response:\n{}", cleanJson);
-
-            return cleanJson;
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to extract text from Gemini response", e);
-        }
+                .block(); // Blocks and returns the final clean string (either from Step 1 or Step 3)
     }
 }
