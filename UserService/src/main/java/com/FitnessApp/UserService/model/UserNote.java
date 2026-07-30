@@ -13,23 +13,29 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Builder
-@Table(name = "fitness_user")
+@Table(name = "user_notes")
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserNote {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String firstName;
-    private String lastName;
-    @Enumerated(EnumType.STRING)
-    @Builder.Default // builder dont initialise with default value
-    private UserRole role = UserRole.USER;
-    @Column(unique = true)
-    private String email;
+
     @Column(nullable = false)
-    private String password;
+    private String userId;
+
+    @Column(nullable = false)
+    private String targetId; // Can be 'general' or recommendationId
+
+    @Column(nullable = false)
+    private String noteDate; // Format: dd/MM/yyyy
+
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
+
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 }
