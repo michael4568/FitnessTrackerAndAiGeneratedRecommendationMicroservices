@@ -24,7 +24,10 @@ import {
   Loader2 
 } from 'lucide-react';
 
-const API_BASE = ''; // proxied via vite to http://localhost:8080
+const API_BASE = ''; // Vite proxies /api/** to http://localhost:8080
+
+let keycloakInstance = null;
+let keycloakPromise = null;
 
 export default function App() {
   // Keycloak & Auth states
@@ -101,13 +104,93 @@ export default function App() {
     if (recChatEndRef.current) recChatEndRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [recChatMessages]);
 
+  // Shared fetch helper — attaches all headers the services expect
+  // (normally injected by Gateway, but here we send them directly since proxy bypasses Gateway)
+  const authFetch = (url, options = {}) => {
+    const currentUser = user;
+    const currentToken = token;
+    return fetch(url, {
+      ...options,
+      headers: {
+        ...(options.headers || {}),
+        'Authorization': `Bearer ${currentToken}`,
+        'X-User-Id': currentUser?.id || '',
+        'X-User-Email': currentUser?.email || ''
+      }
+    });
+  };
+
+  // API Call: Sync User
+  const syncUser = async (authToken, profile) => {
+    try {
+      const url = `${API_BASE}/api/user/sync?firstName=${encodeURIComponent(profile.firstName || '')}&lastName=${encodeURIComponent(profile.lastName || '')}`;
+      await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'X-User-Id': profile.id || '',
+          'X-User-Email': profile.email || ''
+        }
+      });
+    } catch (e) {
+      console.error("User profile sync failed", e);
+    }
+  };
+
+  // Helper: Setup authenticated user state from Keycloak
+  const handleAuthenticatedUser = (kc) => {
+    setAuthenticated(true);
+    setToken(kc.token);
+    if (kc.realmAccess && kc.realmAccess.roles) {
+      setUserRoles(kc.realmAccess.roles);
+    }
+
+    kc.loadUserProfile().then(profile => {
+      const userProfile = {
+        id: profile.id || kc.subject,
+        firstName: profile.firstName || kc.tokenParsed?.given_name || kc.tokenParsed?.preferred_username || 'User',
+        lastName: profile.lastName || kc.tokenParsed?.family_name || '',
+        email: profile.email || kc.tokenParsed?.email || ''
+      };
+      setUser(userProfile);
+      syncUser(kc.token, userProfile);
+      setLoading(false);
+    }).catch(err => {
+      console.error("Failed to load user profile, using fallback claims", err);
+      const fallbackProfile = {
+        id: kc.subject,
+        firstName: kc.tokenParsed?.given_name || kc.tokenParsed?.preferred_username || 'User',
+        lastName: kc.tokenParsed?.family_name || '',
+        email: kc.tokenParsed?.email || ''
+      };
+      setUser(fallbackProfile);
+      syncUser(kc.token, fallbackProfile);
+      setLoading(false);
+    });
+  };
+
   // 1. Initialize Keycloak
   useEffect(() => {
+    if (keycloakPromise) {
+      keycloakPromise.then(() => {
+        if (keycloakInstance) {
+          setKeycloak(keycloakInstance);
+          if (keycloakInstance.authenticated) {
+            handleAuthenticatedUser(keycloakInstance);
+          } else {
+            setLoading(false);
+          }
+        }
+      });
+      return;
+    }
+
     const kc = new Keycloak({
       url: 'http://localhost:8180',
       realm: 'fitness-realm',
       clientId: 'fitness-app'
     });
+    keycloakInstance = kc;
 
     const hasError = window.location.hash.includes('error=') || window.location.search.includes('error=');
     const checkedSso = sessionStorage.getItem('checked_sso');
@@ -122,22 +205,13 @@ export default function App() {
       sessionStorage.setItem('checked_sso', 'true');
     }
 
-    kc.init(initOptions).then(auth => {
+    keycloakPromise = kc.init(initOptions);
+    keycloakPromise.then(auth => {
       setKeycloak(kc);
-      setLoading(false);
       if (auth) {
-        setAuthenticated(true);
-        setToken(kc.token);
-        
-        // Extract Roles
-        if (kc.realmAccess && kc.realmAccess.roles) {
-          setUserRoles(kc.realmAccess.roles);
-        }
-
-        kc.loadUserProfile().then(profile => {
-          setUser(profile);
-          syncUser(kc.token, profile);
-        });
+        handleAuthenticatedUser(kc);
+      } else {
+        setLoading(false);
       }
     }).catch(err => {
       console.error("Keycloak initialization failure", err);
@@ -161,30 +235,11 @@ export default function App() {
     }
   }, [authenticated, activeTab, userRoles]);
 
-  // API Call: Sync User
-  const syncUser = async (authToken, profile) => {
-    try {
-      const url = `${API_BASE}/api/user/sync?firstName=${encodeURIComponent(profile.firstName || '')}&lastName=${encodeURIComponent(profile.lastName || '')}`;
-      await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${authToken}`
-        }
-      });
-    } catch (e) {
-      console.error("User profile sync failed", e);
-    }
-  };
-
   // API Call: Fetch Activities
   const fetchActivities = async () => {
     if (!user?.id) return;
     try {
-      const res = await fetch(`${API_BASE}/api/activities/user/${user.id}?page=${page}&size=5`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const res = await authFetch(`${API_BASE}/api/activities/user/${user.id}?page=${page}&size=5`);
       if (res.ok) {
         const data = await res.json();
         setActivities(data.content || []);
@@ -200,11 +255,7 @@ export default function App() {
   const fetchStats = async () => {
     if (!user?.id) return;
     try {
-      const res = await fetch(`${API_BASE}/api/activities/stats/${user.id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const res = await authFetch(`${API_BASE}/api/activities/stats/${user.id}`);
       if (res.ok) {
         const data = await res.json();
         setStats(data);
@@ -224,7 +275,7 @@ export default function App() {
     const metricsMap = {};
     customMetrics.forEach(m => {
       if (m.key.trim() && m.value) {
-        metricsMap[m.key.trim()] = parseInt(m.value, 10);
+        metricsMap[m.key.trim()] = parseFloat(m.value);
       }
     });
 
@@ -242,12 +293,9 @@ export default function App() {
     };
 
     try {
-      const res = await fetch(`${API_BASE}/api/activities`, {
+      const res = await authFetch(`${API_BASE}/api/activities`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
 
@@ -295,11 +343,8 @@ export default function App() {
     fetchRecNote(activity.id, formattedDate);
 
     try {
-      const res = await fetch(`${API_BASE}/api/recommendations/activity/${activity.id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'X-Gemini-API-Key': sessionApiKey
-        }
+      const res = await authFetch(`${API_BASE}/api/recommendations/activity/${activity.id}`, {
+        headers: { 'X-Gemini-API-Key': sessionApiKey }
       });
 
       if (res.ok) {
@@ -326,12 +371,10 @@ export default function App() {
     setUserChatLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE}/api/recommendations/chat/user`, {
+      const res = await authFetch(`${API_BASE}/api/recommendations/chat/user`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-          'X-User-Id': user.id,
           'X-Gemini-API-Key': sessionApiKey
         },
         body: JSON.stringify({ message: userMessage })
@@ -361,11 +404,10 @@ export default function App() {
     setRecChatLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE}/api/recommendations/chat/recommendation`, {
+      const res = await authFetch(`${API_BASE}/api/recommendations/chat/recommendation`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
           'X-Gemini-API-Key': sessionApiKey
         },
         body: JSON.stringify({
@@ -391,11 +433,7 @@ export default function App() {
   const fetchNotesDates = async () => {
     if (!user?.id) return;
     try {
-      const res = await fetch(`${API_BASE}/api/user/notes/dates`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const res = await authFetch(`${API_BASE}/api/user/notes/dates`);
       if (res.ok) {
         const data = await res.json();
         setNotesDates(data);
@@ -410,11 +448,7 @@ export default function App() {
     setActiveNoteDate(date);
     setNoteText('');
     try {
-      const res = await fetch(`${API_BASE}/api/user/notes?targetId=general`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const res = await authFetch(`${API_BASE}/api/user/notes?targetId=general`);
       if (res.ok) {
         const data = await res.json();
         const found = data.find(n => n.noteDate === date);
@@ -431,12 +465,9 @@ export default function App() {
   const handleSavePersonalNote = async () => {
     if (!activeNoteDate) return;
     try {
-      const res = await fetch(`${API_BASE}/api/user/notes`, {
+      const res = await authFetch(`${API_BASE}/api/user/notes`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           targetId: 'general',
           noteDate: activeNoteDate,
@@ -456,11 +487,7 @@ export default function App() {
   const fetchRecNote = async (activityId, date) => {
     setRecNoteText('');
     try {
-      const res = await fetch(`${API_BASE}/api/user/notes?targetId=${activityId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const res = await authFetch(`${API_BASE}/api/user/notes?targetId=${activityId}`);
       if (res.ok) {
         const data = await res.json();
         const found = data.find(n => n.noteDate === date);
@@ -477,12 +504,9 @@ export default function App() {
   const handleSaveRecNote = async () => {
     if (!activeActivity) return;
     try {
-      const res = await fetch(`${API_BASE}/api/user/notes`, {
+      const res = await authFetch(`${API_BASE}/api/user/notes`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           targetId: activeActivity.id,
           noteDate: recNoteDate,
@@ -500,11 +524,7 @@ export default function App() {
   // API Call: Fetch Admin Users list
   const fetchAdminUsers = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/user/admin/users`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const res = await authFetch(`${API_BASE}/api/user/admin/users`);
       if (res.ok) {
         const data = await res.json();
         setUsersList(data);
@@ -520,11 +540,8 @@ export default function App() {
     if (!window.confirm(`Are you sure you want to change user role to ${newRole}?`)) return;
     
     try {
-      const res = await fetch(`${API_BASE}/api/user/admin/users/${userId}/role?role=${newRole}`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+      const res = await authFetch(`${API_BASE}/api/user/admin/users/${userId}/role?role=${newRole}`, {
+        method: 'PUT'
       });
       if (res.ok) {
         fetchAdminUsers();
@@ -539,11 +556,8 @@ export default function App() {
     if (!window.confirm("Are you sure you want to permanently delete this user profile?")) return;
     
     try {
-      const res = await fetch(`${API_BASE}/api/user/admin/users/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+      const res = await authFetch(`${API_BASE}/api/user/admin/users/${userId}`, {
+        method: 'DELETE'
       });
       if (res.ok) {
         fetchAdminUsers();
@@ -578,8 +592,8 @@ export default function App() {
   };
 
   const updateMetricValue = (index, val) => {
-    // Force integer check in frontend
-    const cleanVal = val.replace(/[^0-9]/g, '');
+    // Force numeric/decimal check in frontend
+    const cleanVal = val.replace(/[^0-9.]/g, '');
     const updated = [...customMetrics];
     updated[index].value = cleanVal;
     setCustomMetrics(updated);
@@ -708,6 +722,8 @@ export default function App() {
           <button 
             onClick={() => {
               sessionStorage.removeItem('checked_sso');
+              keycloakInstance = null;
+              keycloakPromise = null;
               keycloak.logout();
             }}
             className="w-full py-2.5 rounded-xl text-sm font-bold text-gray-400 hover:text-white hover:bg-red-500/10 border border-white/5 hover:border-red-500/20 transition flex items-center justify-center space-x-2 cursor-pointer"
@@ -1168,8 +1184,10 @@ export default function App() {
                           className="flex-1 bg-white/[0.04] border border-white/5 rounded-xl px-3 py-2 text-xs text-gray-300 focus:outline-none"
                         />
                         <input 
-                          type="text" 
-                          placeholder="Value (Integer only)" 
+                          type="number" 
+                          placeholder="Value (e.g. 5.5)" 
+                          step="any"
+                          min="0"
                           value={item.value}
                           onChange={(e) => updateMetricValue(idx, e.target.value)}
                           required
@@ -1416,50 +1434,8 @@ export default function App() {
         </div>
       )}
 
-      {/* KEY CONFIG MODAL */}
-      {showApiKeyModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div onClick={() => setShowApiKeyModal(false)} className="absolute inset-0 bg-[#070b13]/80 backdrop-blur-sm" />
-          
-          <div className="glass-card w-full max-w-sm rounded-2xl z-10 overflow-hidden relative glow-orange animate-in fade-in zoom-in duration-200">
-            <header className="px-6 py-4 border-b border-white/5 flex items-center justify-between">
-              <h3 className="font-bold text-white font-outfit text-sm">Configure API Settings</h3>
-              <button onClick={() => setShowApiKeyModal(false)} className="p-1 text-gray-500 hover:text-white transition cursor-pointer">
-                <X className="h-4 w-4" />
-              </button>
-            </header>
 
-            <div className="p-6 space-y-4">
-              <div className="flex flex-col space-y-1.5">
-                <label className="text-xs text-gray-400 font-semibold">Gemini API Key</label>
-                <input 
-                  type="password"
-                  value={sessionApiKey}
-                  onChange={(e) => setSessionApiKey(e.target.value)}
-                  placeholder="Enter your Gemini API key"
-                  className="bg-white/[0.04] border border-white/5 rounded-xl px-3.5 py-2.5 text-sm text-gray-300 focus:outline-none"
-                />
-                <p className="text-[10px] text-gray-500 leading-normal mt-1">Your API key is saved locally in this browser session.</p>
-              </div>
-            </div>
 
-            <footer className="px-6 py-4 border-t border-white/5 flex items-center justify-end space-x-2">
-              <button 
-                onClick={clearApiKey}
-                className="px-3.5 py-2 border border-white/5 hover:bg-white/[0.02] text-xs text-red-400 rounded-xl cursor-pointer"
-              >
-                Clear Key
-              </button>
-              <button 
-                onClick={saveApiKey}
-                className="px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 font-bold text-white rounded-xl text-xs transition cursor-pointer"
-              >
-                Apply Settings
-              </button>
-            </footer>
-          </div>
-        </div>
-      )}
 
       {/* API Configuration Setting Trigger Modal shortcut */}
       {showKeyModal && (
