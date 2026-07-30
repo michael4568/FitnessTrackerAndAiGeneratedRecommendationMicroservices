@@ -29,7 +29,7 @@ public class ActivityService {
         Activity activity = Activity.builder().
                 userId(activityRequest.getUserId()).activityType(activityRequest.getActivityType()).
                 startTime(activityRequest.getStartTime()).
-                Duration(activityRequest.getDuration()).
+                duration(activityRequest.getDuration()).
                 caloriesBurned(activityRequest.getCaloriesBurned()).
                 additionalMetrics(activityRequest.getAdditionalMetrics()).
                 build();

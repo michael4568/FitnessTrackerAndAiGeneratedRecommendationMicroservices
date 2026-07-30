@@ -16,14 +16,14 @@ spring:
     gateway:
       routes:
         - id: user-service
-          uri: lb://USER-SERVICE
+          uri: http://localhost:8081
           predicates:
             - Path=/api/user/**
         - id: activity-service
-          uri: lb://ACTIVITY-SERVICE
+          uri: http://localhost:8082
           predicates:
             - Path=/api/activities/**
         - id: ai-service
-          uri: lb://AI-SERVICE
+          uri: http://localhost:8083
           predicates:
             - Path=/api/recommendations/**

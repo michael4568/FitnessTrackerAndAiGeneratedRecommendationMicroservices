@@ -18,7 +18,7 @@ public class ActivityResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime startTime;
-    private Integer Duration;
+    private Integer duration;
     private Integer caloriesBurned;
     private Map<String , Object> additionalMetrics;
 }

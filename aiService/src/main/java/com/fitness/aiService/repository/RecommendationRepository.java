@@ -12,5 +12,6 @@ public interface RecommendationRepository extends MongoRepository<Recommendation
 
     List<Recommendation> findByUserId(String userId);
 
-    Optional<Recommendation> findByActivityId(String activityId);
+    // Returns List to safely handle any duplicate documents for same activityId
+    List<Recommendation> findByActivityId(String activityId);
 }

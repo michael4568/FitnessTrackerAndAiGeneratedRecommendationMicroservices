@@ -16,24 +16,33 @@ public class RecommendationService {
     private final ActivityAiService activityAiService;
 
     public List<Recommendation> getUserRecommendation(String userId) {
-       return  recommendationRepository.findByUserId(userId);
+        return recommendationRepository.findByUserId(userId);
     }
 
     public Recommendation getactivityRecommendation(String activityId) {
-        return recommendationRepository.findByActivityId(activityId).orElseThrow(
-                () -> new ActivityNotFoundException("no recommendation for activity id: " + activityId)
-        );
+        List<Recommendation> results = recommendationRepository.findByActivityId(activityId);
+        if (results.isEmpty()) {
+            throw new ActivityNotFoundException("no recommendation for activity id: " + activityId);
+        }
+        // Return the most recently saved one if duplicates somehow exist
+        return results.get(results.size() - 1);
     }
 
     public Recommendation getOrGenerateActivityRecommendation(String activityId, String customApiKey) {
-        return recommendationRepository.findByActivityId(activityId).orElseGet(() -> {
-            com.fitness.aiService.model.Activity activity = activityServiceClient.getActivityById(activityId);
-            if (activity == null) {
-                throw new ActivityNotFoundException("No activity found with id: " + activityId + " to generate recommendation.");
-            }
-            Recommendation recommendation = activityAiService.getResponseRecommendation(activity, customApiKey);
-            return recommendationRepository.save(recommendation);
-        });
+        List<Recommendation> existing = recommendationRepository.findByActivityId(activityId);
+
+        // If a recommendation already exists, return the latest one immediately
+        if (!existing.isEmpty()) {
+            return existing.get(existing.size() - 1);
+        }
+
+        // No recommendation found — fetch activity and generate via Gemini
+        com.fitness.aiService.model.Activity activity = activityServiceClient.getActivityById(activityId);
+        if (activity == null) {
+            throw new ActivityNotFoundException("No activity found with id: " + activityId + " to generate recommendation.");
+        }
+
+        Recommendation recommendation = activityAiService.getResponseRecommendation(activity, customApiKey);
+        return recommendationRepository.save(recommendation);
     }
 }
-

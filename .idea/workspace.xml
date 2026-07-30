@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="finalised consumer , saving ai generated recommendations to mongodb">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-    </list>
+    <list default="true" id="ecb7138f-e96b-432c-8a66-141471be4616" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,61 +44,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0674347452175812E-5" />
-      <entry key="MS500" value="0.1355060332889666" />
-      <entry key="S2" value="1.9020190379018067" />
-      <entry key="S5" value="4.598284295395074" />
-      <entry key="S10" value="6.4526041995192465" />
-      <entry key="S30" value="14.100586699079539" />
-      <entry key="S60" value="29.081654483512477" />
-      <entry key="M2" value="51.42609394180629" />
-      <entry key="M5" value="84.25206572212943" />
-      <entry key="M10" value="104.75754150276192" />
-      <entry key="M15" value="114.43969203491287" />
-      <entry key="M30" value="130.7568869588565" />
-      <entry key="H1" value="152.81786108151678" />
-      <entry key="H2" value="180.63290275536423" />
-      <entry key="H4" value="224.38741488161406" />
-      <entry key="D1" value="566.2896001618966" />
-      <entry key="W1" value="924.7542431316756" />
+      <entry key="MS100" value="1.4661038750109778" />
+      <entry key="MS500" value="3.324602334603222" />
+      <entry key="S2" value="5.045827659916538" />
+      <entry key="S5" value="5.726163824544496" />
+      <entry key="S10" value="7.386947437347774" />
+      <entry key="S30" value="23.314724657110062" />
+      <entry key="S60" value="41.86152983862766" />
+      <entry key="M2" value="58.438078260201756" />
+      <entry key="M5" value="74.14281719683689" />
+      <entry key="M10" value="86.50281649960803" />
+      <entry key="M15" value="96.56890585212403" />
+      <entry key="M30" value="119.31174843605127" />
+      <entry key="H1" value="145.73119313265278" />
+      <entry key="H2" value="176.3442406112912" />
+      <entry key="H4" value="232.7298659722919" />
+      <entry key="D1" value="667.9281278719079" />
+      <entry key="W1" value="1163.7001180455277" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.0" />
-      <entry key="S10" value="1.0" />
-      <entry key="S30" value="1.0" />
-      <entry key="S60" value="1.0" />
-      <entry key="M2" value="1.0000000000399982" />
-      <entry key="M5" value="1.0000695201164806" />
-      <entry key="M10" value="1.0102269895313587" />
-      <entry key="M15" value="1.0853507650384302" />
-      <entry key="M30" value="2.3272892798825566" />
-      <entry key="H1" value="7.607938273017125" />
-      <entry key="H2" value="17.9480466131583" />
-      <entry key="H4" value="36.72127789447358" />
-      <entry key="D1" value="184.6620257625725" />
-      <entry key="W1" value="344.57814862678043" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="8.83570464719572E-125" />
+      <entry key="S60" value="9.399842896131659E-63" />
+      <entry key="M2" value="9.69527869436027E-32" />
+      <entry key="M5" value="3.9320960608681133E-13" />
+      <entry key="M10" value="6.27071514630948E-7" />
+      <entry key="M15" value="7.329873503044955E-5" />
+      <entry key="M30" value="0.008752934042318063" />
+      <entry key="H1" value="0.10869732208082489" />
+      <entry key="H2" value="0.7322957401387454" />
+      <entry key="H4" value="5.72248801356299" />
+      <entry key="D1" value="133.4202170956518" />
+      <entry key="W1" value="330.28812219491203" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="2.170122719898991E-5" />
-      <entry key="MS500" value="0.18345659221337485" />
-      <entry key="S2" value="2.2163117207317247" />
-      <entry key="S5" value="5.199483753258876" />
-      <entry key="S10" value="7.22241965673458" />
-      <entry key="S30" value="15.01449817966601" />
-      <entry key="S60" value="30.035408632988034" />
-      <entry key="M2" value="52.3992892940487" />
-      <entry key="M5" value="85.2378514091069" />
-      <entry key="M10" value="105.75907253701077" />
-      <entry key="M15" value="115.51841208750058" />
-      <entry key="M30" value="133.07882271236966" />
-      <entry key="H1" value="160.41998285596875" />
-      <entry key="H2" value="198.57522519786036" />
-      <entry key="H4" value="261.1031127579528" />
-      <entry key="D1" value="750.946387856666" />
-      <entry key="W1" value="1269.3309495350309" />
+      <entry key="MS100" value="1.3757576848133375" />
+      <entry key="MS500" value="3.246259132676069" />
+      <entry key="S2" value="5.016494335217368" />
+      <entry key="S5" value="5.710326831996402" />
+      <entry key="S10" value="7.368628506202699" />
+      <entry key="S30" value="23.295303533635845" />
+      <entry key="S60" value="41.84719207300295" />
+      <entry key="M2" value="58.429140556477535" />
+      <entry key="M5" value="74.1383085855134" />
+      <entry key="M10" value="86.49981282176306" />
+      <entry key="M15" value="96.56652672143659" />
+      <entry key="M30" value="119.3187641744222" />
+      <entry key="H1" value="145.83865907726957" />
+      <entry key="H2" value="177.07549184237897" />
+      <entry key="H4" value="238.4508856840505" />
+      <entry key="D1" value="801.3443949612968" />
+      <entry key="W1" value="1493.9868315454569" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -122,6 +115,7 @@
     "Application.AiServiceFitnessApplication.executor": "Run",
     "Application.ConfigService.executor": "Run",
     "Application.EurekaService.executor": "Run",
+    "Application.GatewayService.executor": "Run",
     "Application.UserServiceFitnessApplication.executor": "Run",
     "Maven.ActivityService [clean].executor": "Run",
     "Maven.ActivityService [compile].executor": "Run",
@@ -134,6 +128,7 @@
     "Spring Boot.ActivityServiceApplication.executor": "Run",
     "Spring Boot.ConfigServiceApplication.executor": "Run",
     "Spring Boot.EurekaApplication.executor": "Run",
+    "Spring Boot.GatewayApplication.executor": "Run",
     "Spring Boot.UserServiceApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
@@ -182,6 +177,7 @@
               <entry key="AiServiceFitnessApplication" value="STOPPED" />
               <entry key="ConfigService" value="STOPPED" />
               <entry key="EurekaService" value="STOPPED" />
+              <entry key="GatewayService" value="STOPPED" />
               <entry key="UserServiceFitnessApplication" value="STOPPED" />
             </map>
           </value>
@@ -189,7 +185,7 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ActivityServiceFitnessApplication">
+  <component name="RunManager" selected="Application.AiServiceFitnessApplication">
     <configuration name="ActivityServiceFitnessApplication" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.fitness.ActivityService.ActivityServiceApplication" />
       <module name="ActivityService" />
@@ -219,6 +215,15 @@
     <configuration name="EurekaService" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.fitness.eureka.EurekaApplication" />
       <module name="eureka" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayService" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="25" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.fitness.gateway.GatewayApplication" />
+      <module name="gateway" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -261,15 +266,36 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fitness.gateway.GatewayApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.fitness.gateway.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
+      <item itemvalue="Application.GatewayService" />
       <item itemvalue="Application.ConfigService" />
-      <item itemvalue="Application.ActivityServiceFitnessApplication" />
       <item itemvalue="Application.AiServiceFitnessApplication" />
+      <item itemvalue="Application.ActivityServiceFitnessApplication" />
       <item itemvalue="Application.EurekaService" />
       <item itemvalue="Application.UserServiceFitnessApplication" />
       <item itemvalue="Spring Boot.ConfigServiceApplication" />
       <item itemvalue="Spring Boot.EurekaApplication" />
+      <item itemvalue="Spring Boot.GatewayApplication" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.GatewayApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>

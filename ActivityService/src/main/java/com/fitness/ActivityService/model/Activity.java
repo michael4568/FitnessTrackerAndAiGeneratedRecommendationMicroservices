@@ -29,7 +29,7 @@ public class Activity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
     private LocalDateTime startTime;
-    private Integer Duration;
+    private Integer duration;
     private Integer caloriesBurned;
     @Field("metrics")
     private Map<String , Object> additionalMetrics;

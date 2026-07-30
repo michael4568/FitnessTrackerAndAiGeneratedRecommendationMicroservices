@@ -115,7 +115,7 @@ export default function App() {
         ...(options.headers || {}),
         'Authorization': `Bearer ${currentToken}`,
         'X-User-Id': currentUser?.id || '',
-        'X-User-Email': currentUser?.email || ''
+        'X-User-Email': currentUser?.email || 'no-email@provided.com'
       }
     });
   };
@@ -129,7 +129,7 @@ export default function App() {
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'X-User-Id': profile.id || '',
-          'X-User-Email': profile.email || ''
+          'X-User-Email': profile.email || 'no-email@provided.com'
         }
       });
     } catch (e) {
