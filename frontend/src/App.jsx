@@ -111,6 +111,7 @@ export default function App() {
 
     kc.init({ 
       onLoad: 'check-sso', 
+      silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
       checkLoginIframe: false,
       pkceMethod: 'S256'
     }).then(auth => {
@@ -621,13 +622,13 @@ export default function App() {
 
           <div className="mt-8 border border-white/5 bg-white/[0.02] backdrop-blur-md rounded-xl p-4 w-full max-w-md">
             <label className="block text-gray-500 text-xs font-semibold uppercase tracking-wider mb-2 text-left">
-              Optional: Pass Custom Gemini API Key
+              Add your own Gemini API Key
             </label>
             <div className="flex items-center space-x-2">
               <Key className="h-4 w-4 text-gray-500 shrink-0" />
               <input 
                 type="password"
-                placeholder="Enter key to override backend setting"
+                placeholder="Enter your Gemini API key"
                 value={sessionApiKey}
                 onChange={(e) => {
                   setSessionApiKey(e.target.value);
@@ -718,7 +719,7 @@ export default function App() {
           <div className="flex items-center space-x-4">
             <div className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02] text-gray-400 flex items-center space-x-1">
               <Key className="h-3 w-3 text-orange-500" />
-              <span>API KEY: {sessionApiKey ? 'CUSTOM (ACTIVE)' : 'SERVER DEFAULT'}</span>
+              <span>API Key: {sessionApiKey ? 'Active' : 'Default'}</span>
             </div>
             <button 
               onClick={() => setShowKeyModal(true)}
@@ -1419,15 +1420,15 @@ export default function App() {
 
             <div className="p-6 space-y-4">
               <div className="flex flex-col space-y-1.5">
-                <label className="text-xs text-gray-400 font-semibold">Gemini API Key (Stored in Session)</label>
+                <label className="text-xs text-gray-400 font-semibold">Gemini API Key</label>
                 <input 
                   type="password"
                   value={sessionApiKey}
                   onChange={(e) => setSessionApiKey(e.target.value)}
-                  placeholder="Enter key to override backend setting"
+                  placeholder="Enter your Gemini API key"
                   className="bg-white/[0.04] border border-white/5 rounded-xl px-3.5 py-2.5 text-sm text-gray-300 focus:outline-none"
                 />
-                <p className="text-[10px] text-gray-500 leading-normal mt-1">Your API key is saved locally in this browser session and forwarded downstream to bypass server rate limits.</p>
+                <p className="text-[10px] text-gray-500 leading-normal mt-1">Your API key is saved locally in this browser session.</p>
               </div>
             </div>
 
@@ -1464,15 +1465,15 @@ export default function App() {
 
             <div className="p-6 space-y-4">
               <div className="flex flex-col space-y-1.5">
-                <label className="text-xs text-gray-400 font-semibold">Gemini API Key (Stored in Session)</label>
+                <label className="text-xs text-gray-400 font-semibold">Gemini API Key</label>
                 <input 
                   type="password"
                   value={sessionApiKey}
                   onChange={(e) => setSessionApiKey(e.target.value)}
-                  placeholder="Enter key to override backend setting"
+                  placeholder="Enter your Gemini API key"
                   className="bg-white/[0.04] border border-white/5 rounded-xl px-3.5 py-2.5 text-sm text-gray-300 focus:outline-none"
                 />
-                <p className="text-[10px] text-gray-500 leading-normal mt-1">Your API key is saved locally in this browser session and forwarded downstream to bypass server rate limits.</p>
+                <p className="text-[10px] text-gray-500 leading-normal mt-1">Your API key is saved locally in this browser session.</p>
               </div>
             </div>
 
