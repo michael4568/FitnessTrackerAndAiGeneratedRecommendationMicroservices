@@ -19,9 +19,9 @@ public class ActivityAiService {
     private final GeminiService geminiService;
     private final ObjectMapper objectMapper;
 
-    public Recommendation getResponseRecommendation(Activity activity){
+    public Recommendation getResponseRecommendation(Activity activity, String customApiKey){
         String prompt = generatePrompt(activity);
-        String AiResponse = geminiService.getRecommendation(prompt);
+        String AiResponse = geminiService.getRecommendation(prompt, customApiKey);
         log.info("Response from Api: " + AiResponse);
         Recommendation recommendation;
         try {

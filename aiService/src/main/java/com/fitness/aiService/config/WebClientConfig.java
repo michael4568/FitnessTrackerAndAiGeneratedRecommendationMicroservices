@@ -14,4 +14,9 @@ public class WebClientConfig {
         return WebClient.builder();
     }
 
+    @Bean
+    public WebClient webClientActivityService(WebClient.Builder webClientBuilder) {
+        return webClientBuilder.baseUrl("http://activity-service").build();
+    }
+
 }

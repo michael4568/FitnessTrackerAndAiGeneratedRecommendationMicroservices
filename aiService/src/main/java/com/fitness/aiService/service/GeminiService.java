@@ -11,6 +11,7 @@ import reactor.util.retry.Retry;
 
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -24,53 +25,55 @@ public class GeminiService {
     private String geminiUrl;
 
     private final WebClient webClient;
-    private final ObjectMapper objectMapper; // Best practice: reuse a single ObjectMapper instance
+    private final ObjectMapper objectMapper;
 
     public GeminiService(ObjectMapper objectMapper) {
         this.webClient = WebClient.create();
         this.objectMapper = objectMapper;
     }
 
-    public String getRecommendation(String details) {
+    public String getRecommendation(String details, String customApiKey) {
+        String apiKey = (customApiKey != null && !customApiKey.trim().isEmpty()) ? customApiKey : geminiApiKey;
+
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("model", "gemini-3.6-flash");
-        requestBody.put("input", details);
+        Map<String, Object> part = new HashMap<>();
+        part.put("text", details);
+        Map<String, Object> content = new HashMap<>();
+        content.put("parts", List.of(part));
+        requestBody.put("contents", List.of(content));
+
+        String targetUrl = geminiUrl;
+        if (targetUrl == null || targetUrl.contains("interactions") || targetUrl.trim().isEmpty()) {
+            targetUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+        }
 
         return webClient.post()
-                .uri(geminiUrl)
-                .header("x-goog-api-key", geminiApiKey)
+                .uri(targetUrl)
+                .header("x-goog-api-key", apiKey)
                 .header("Content-Type", "application/json")
                 .bodyValue(requestBody)
                 .retrieve()
                 .bodyToMono(String.class)
-
-                // STEP 1: Unwrap the envelope immediately upon success
                 .map(rawResponse -> {
                     try {
                         String cleanJson = objectMapper.readTree(rawResponse)
                                 .findValue("text")
                                 .asText()
-                                .replace("```json", "") // Removes the opening Markdown tag
-                                .replace("```", "")     // Removes the closing Markdown tag
-                                .trim();                // Cleans up any leftover physical newlines or spaces at the top/bottom
+                                .replace("```json", "")
+                                .replace("```", "")
+                                .trim();
                         log.info("Clean Gemini Response:\n{}", cleanJson);
                         return cleanJson;
                     } catch (Exception e) {
                         throw new RuntimeException("Failed to extract text from Gemini response", e);
                     }
                 })
-
-                // STEP 2: Retry logic
                 .retryWhen(Retry.backoff(3, Duration.ofSeconds(2))
                         .filter(throwable -> throwable instanceof WebClientResponseException &&
                                 (((WebClientResponseException) throwable).getStatusCode().value() == 503 ||
                                         ((WebClientResponseException) throwable).getStatusCode().value() == 429)))
-
-                // STEP 3: Fallback (Because of Step 1, this now expects Clean JSON, not Google JSON!)
                 .onErrorResume(e -> {
                     log.error("Gemini API call failed. Returning fallback recommendation. Cause: {}", e.getMessage());
-
-
                     String fallbackJson = """
                             {
                               "analysis": {
@@ -94,6 +97,41 @@ public class GeminiService {
                             """;
                     return Mono.just(fallbackJson);
                 })
-                .block(); // Blocks and returns the final clean string (either from Step 1 or Step 3)
+                .block();
+    }
+
+    public String askGemini(String prompt, String customApiKey) {
+        String apiKey = (customApiKey != null && !customApiKey.trim().isEmpty()) ? customApiKey : geminiApiKey;
+
+        Map<String, Object> requestBody = new HashMap<>();
+        Map<String, Object> part = new HashMap<>();
+        part.put("text", prompt);
+        Map<String, Object> content = new HashMap<>();
+        content.put("parts", List.of(part));
+        requestBody.put("contents", List.of(content));
+
+        String targetUrl = geminiUrl;
+        if (targetUrl == null || targetUrl.contains("interactions") || targetUrl.trim().isEmpty()) {
+            targetUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+        }
+
+        try {
+            String rawResponse = webClient.post()
+                    .uri(targetUrl)
+                    .header("x-goog-api-key", apiKey)
+                    .header("Content-Type", "application/json")
+                    .bodyValue(requestBody)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+            
+            return objectMapper.readTree(rawResponse)
+                    .findValue("text")
+                    .asText()
+                    .trim();
+        } catch (Exception e) {
+            log.error("Gemini chatbot query failed: {}", e.getMessage());
+            return "cant help with that try aqsking differnt";
+        }
     }
 }

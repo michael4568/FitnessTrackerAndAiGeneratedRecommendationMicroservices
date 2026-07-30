@@ -18,7 +18,7 @@ public class ActivityListener {
     public void ListenAtivity(Activity activity){
         log.info("Activity consumed from producer with userId: " + activity.getUserId());
 
-            Recommendation recommendation = activityAiService.getResponseRecommendation(activity);
+            Recommendation recommendation = activityAiService.getResponseRecommendation(activity, null);
             recommendationRepository.save(recommendation);
 
 

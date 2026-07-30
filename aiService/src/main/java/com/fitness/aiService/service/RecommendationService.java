@@ -12,14 +12,28 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RecommendationService {
     private final RecommendationRepository recommendationRepository;
+    private final ActivityServiceClient activityServiceClient;
+    private final ActivityAiService activityAiService;
+
     public List<Recommendation> getUserRecommendation(String userId) {
        return  recommendationRepository.findByUserId(userId);
     }
 
     public Recommendation getactivityRecommendation(String activityId) {
-        Recommendation recommendation = recommendationRepository.findByActivityId(activityId).orElseThrow(
+        return recommendationRepository.findByActivityId(activityId).orElseThrow(
                 () -> new ActivityNotFoundException("no recommendation for activity id: " + activityId)
         );
-        return  recommendation;
+    }
+
+    public Recommendation getOrGenerateActivityRecommendation(String activityId, String customApiKey) {
+        return recommendationRepository.findByActivityId(activityId).orElseGet(() -> {
+            com.fitness.aiService.model.Activity activity = activityServiceClient.getActivityById(activityId);
+            if (activity == null) {
+                throw new ActivityNotFoundException("No activity found with id: " + activityId + " to generate recommendation.");
+            }
+            Recommendation recommendation = activityAiService.getResponseRecommendation(activity, customApiKey);
+            return recommendationRepository.save(recommendation);
+        });
     }
 }
+
