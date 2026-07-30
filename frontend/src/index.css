@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: #0b0f19;
+    color: #f3f4f6;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Glassmorphism Classes */
+.glass {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(22, 28, 45, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Micro-animations */
+.hover-scale {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
+}
+.hover-scale:hover {
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Animated Neon Borders */
+.glow-orange {
+  box-shadow: 0 0 15px rgba(249, 115, 22, 0.15);
+}
+.glow-orange:hover {
+  box-shadow: 0 0 25px rgba(249, 115, 22, 0.3);
+}
+
+.glow-green {
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+}
+.glow-green:hover {
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.3);
+}
+
+/* Spinner Animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-custom {
+  animation: spin 1s linear infinite;
+}
+
+/* Modal Scrollbar customization */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
