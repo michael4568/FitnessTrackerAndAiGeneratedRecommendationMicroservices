@@ -23,7 +23,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ActivityController {
 
     private final ActivityService activityService;
-    @PostMapping()
+    
+    @PostMapping("/test")
+    public ResponseEntity<String> testPost() {
+        return ResponseEntity.ok("POST request reached ActivityService!");
+    }
+
+    @PostMapping("/track")
     public ResponseEntity<ActivityResponse> trackActivity(@RequestBody ActivityRequest activityRequest){
         return ResponseEntity.ok(activityService.trackActivity(activityRequest));
     }

@@ -17,11 +17,11 @@ public class GlobalExceptionHandler {
         Map<String, Object> errorDetails = new HashMap<>();
 
         errorDetails.put("timestamp", LocalDateTime.now());
-        errorDetails.put("status", HttpStatus.NOT_FOUND.value());
-        errorDetails.put("error", "Not Found");
+        errorDetails.put("status", HttpStatus.BAD_REQUEST.value());
+        errorDetails.put("error", "User Validation Failed");
         errorDetails.put("message", ex.getMessage());
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetails);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDetails);
     }
 
     @ExceptionHandler(UniqueEmailConstraintException.class)
@@ -53,5 +53,18 @@ public class GlobalExceptionHandler {
         errorDetails.put("fieldErrors", fieldErrors);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDetails);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleAllOtherExceptions(Exception ex) {
+        ex.printStackTrace(); // Log the exact error to the console!
+        
+        Map<String, Object> errorDetails = new HashMap<>();
+        errorDetails.put("timestamp", LocalDateTime.now());
+        errorDetails.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        errorDetails.put("error", "Internal Server Error");
+        errorDetails.put("message", ex.getClass().getName() + ": " + ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDetails);
     }
 }

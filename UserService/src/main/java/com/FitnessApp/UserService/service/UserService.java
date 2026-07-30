@@ -40,22 +40,42 @@ public class UserService {
     }
 
     public UserResponse syncUser(String userId, String email, String firstName, String lastName) {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
+        // Protect against empty/null userId from Gateway or Frontend
+        if (userId == null || userId.trim().isEmpty()) {
+            userId = null; 
+        }
+
+        User user = null;
+        if (userId != null) {
+            user = userRepository.findById(userId).orElse(null);
+        }
+
+        // If not found by ID, try finding by email
+        if (user == null && email != null && !email.isEmpty()) {
             user = userRepository.findByEmail(email);
-            if (user != null) {
-                userRepository.delete(user);
+        }
+
+        if (user != null) {
+            // UPDATE existing user (prevents 500 errors from foreign key constraints)
+            user.setFirstName(firstName != null && !firstName.isEmpty() ? firstName : user.getFirstName());
+            if (lastName != null && !lastName.isEmpty()) {
+                user.setLastName(lastName);
             }
+            user = userRepository.save(user);
+        } else {
+            // CREATE new user
+            String finalId = userId != null ? userId : java.util.UUID.randomUUID().toString();
             user = User.builder()
-                    .id(userId)
+                    .id(finalId)
                     .email(email)
-                    .firstName(firstName != null ? firstName : "User")
+                    .firstName(firstName != null && !firstName.isEmpty() ? firstName : "User")
                     .lastName(lastName != null ? lastName : "")
                     .password("OIDC_USER")
                     .role(UserRole.USER)
                     .build();
             user = userRepository.save(user);
         }
+        
         return MapToResponse(user);
     }
 

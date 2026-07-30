@@ -45,6 +45,11 @@ public class UserController {
             @RequestHeader("X-User-Email") String email,
             @RequestParam(value = "firstName", required = false) String firstName,
             @RequestParam(value = "lastName", required = false) String lastName) {
+        
+        System.out.println("=== SYNC USER CALLED ===");
+        System.out.println("Received X-User-Id: '" + userId + "'");
+        System.out.println("Received X-User-Email: '" + email + "'");
+        
         return ResponseEntity.ok(userService.syncUser(userId, email, firstName, lastName));
     }
 

@@ -105,17 +105,13 @@ export default function App() {
   }, [recChatMessages]);
 
   // Shared fetch helper — attaches all headers the services expect
-  // (normally injected by Gateway, but here we send them directly since proxy bypasses Gateway)
   const authFetch = (url, options = {}) => {
-    const currentUser = user;
     const currentToken = token;
     return fetch(url, {
       ...options,
       headers: {
         ...(options.headers || {}),
-        'Authorization': `Bearer ${currentToken}`,
-        'X-User-Id': currentUser?.id || '',
-        'X-User-Email': currentUser?.email || 'no-email@provided.com'
+        'Authorization': `Bearer ${currentToken}`
       }
     });
   };
@@ -124,7 +120,7 @@ export default function App() {
   const syncUser = async (authToken, profile) => {
     try {
       const url = `${API_BASE}/api/user/sync?firstName=${encodeURIComponent(profile.firstName || '')}&lastName=${encodeURIComponent(profile.lastName || '')}`;
-      await fetch(url, {
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -132,6 +128,14 @@ export default function App() {
           'X-User-Email': profile.email || 'no-email@provided.com'
         }
       });
+      if (response.ok) {
+        const syncedUser = await response.json();
+        // Update the frontend state with the authoritative backend user object
+        setUser(prevUser => ({
+          ...prevUser,
+          id: syncedUser.id // Ensure we have the correct UUID generated or verified by the backend
+        }));
+      }
     } catch (e) {
       console.error("User profile sync failed", e);
     }
@@ -147,7 +151,7 @@ export default function App() {
 
     kc.loadUserProfile().then(profile => {
       const userProfile = {
-        id: profile.id || kc.subject,
+        id: profile.id || kc.tokenParsed?.sub || kc.subject,
         firstName: profile.firstName || kc.tokenParsed?.given_name || kc.tokenParsed?.preferred_username || 'User',
         lastName: profile.lastName || kc.tokenParsed?.family_name || '',
         email: profile.email || kc.tokenParsed?.email || ''
@@ -158,7 +162,7 @@ export default function App() {
     }).catch(err => {
       console.error("Failed to load user profile, using fallback claims", err);
       const fallbackProfile = {
-        id: kc.subject,
+        id: kc.tokenParsed?.sub || kc.subject,
         firstName: kc.tokenParsed?.given_name || kc.tokenParsed?.preferred_username || 'User',
         lastName: kc.tokenParsed?.family_name || '',
         email: kc.tokenParsed?.email || ''
@@ -293,7 +297,7 @@ export default function App() {
     };
 
     try {
-      const res = await authFetch(`${API_BASE}/api/activities`, {
+      const res = await authFetch(`${API_BASE}/api/activities/track`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)

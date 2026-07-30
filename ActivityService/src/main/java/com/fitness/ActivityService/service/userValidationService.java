@@ -16,14 +16,8 @@ public class userValidationService {
 
     @CircuitBreaker(name = "userService", fallbackMethod = "validateUserFallback")
     public boolean validateUser(String userId){
-        try {
-            return userWebClient.get().uri("/api/user/validate/{userId}", userId)
-                    .retrieve().bodyToMono(Boolean.class).block();
-        }
-        catch(WebClientResponseException e){
-            e.printStackTrace();
-        }
-        return false;
+        return userWebClient.get().uri("/api/user/validate/{userId}", userId)
+                .retrieve().bodyToMono(Boolean.class).block();
     }
 
     public boolean validateUserFallback(String userId, Throwable throwable) {
