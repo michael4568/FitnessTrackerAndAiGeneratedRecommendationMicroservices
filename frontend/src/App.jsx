@@ -109,12 +109,20 @@ export default function App() {
       clientId: 'fitness-app'
     });
 
-    kc.init({ 
-      onLoad: 'check-sso', 
-      silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+    const hasError = window.location.hash.includes('error=') || window.location.search.includes('error=');
+    const checkedSso = sessionStorage.getItem('checked_sso');
+
+    const initOptions = {
       checkLoginIframe: false,
       pkceMethod: 'S256'
-    }).then(auth => {
+    };
+
+    if (!checkedSso && !hasError) {
+      initOptions.onLoad = 'check-sso';
+      sessionStorage.setItem('checked_sso', 'true');
+    }
+
+    kc.init(initOptions).then(auth => {
       setKeycloak(kc);
       setLoading(false);
       if (auth) {
@@ -698,7 +706,10 @@ export default function App() {
             </div>
           </div>
           <button 
-            onClick={() => keycloak.logout()}
+            onClick={() => {
+              sessionStorage.removeItem('checked_sso');
+              keycloak.logout();
+            }}
             className="w-full py-2.5 rounded-xl text-sm font-bold text-gray-400 hover:text-white hover:bg-red-500/10 border border-white/5 hover:border-red-500/20 transition flex items-center justify-center space-x-2 cursor-pointer"
           >
             <LogOut className="h-4 w-4" />
