@@ -58,4 +58,32 @@ public class ActivityService {
         return activityResponse;
     }
 
+    public org.springframework.data.domain.Page<Activity> getActivitiesByUser(String userId, org.springframework.data.domain.Pageable pageable) {
+        return activityRepository.findByUserId(userId, pageable);
+    }
+
+    public Activity getActivityById(String activityId) {
+        return activityRepository.findById(activityId)
+                .orElseThrow(() -> new com.fitness.ActivityService.exception.ActivityNotFoundException("Activity not found with id: " + activityId));
+    }
+
+    public java.util.Map<String, Object> getActivityStats(String userId) {
+        java.util.List<Activity> activities = activityRepository.findByUserId(userId);
+        int totalWorkouts = activities.size();
+        int totalDuration = activities.stream().mapToInt(a -> a.getDuration() != null ? a.getDuration() : 0).sum();
+        int totalCalories = activities.stream().mapToInt(a -> a.getCaloriesBurned() != null ? a.getCaloriesBurned() : 0).sum();
+
+        java.util.Map<String, Long> workoutsByType = activities.stream()
+                .filter(a -> a.getActivityType() != null)
+                .collect(java.util.stream.Collectors.groupingBy(a -> a.getActivityType().name(), java.util.stream.Collectors.counting()));
+
+        java.util.Map<String, Object> stats = new java.util.HashMap<>();
+        stats.put("totalWorkouts", totalWorkouts);
+        stats.put("totalDuration", totalDuration);
+        stats.put("totalCalories", totalCalories);
+        stats.put("workoutsByType", workoutsByType);
+
+        return stats;
+    }
 }
+
