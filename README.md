@@ -54,6 +54,60 @@ To facilitate developer integration and testing, **Swagger UI** (via `springdoc-
 
 ---
 
+## 🚀 Local Development Setup
+
+To run this project locally, ensure you have the required infrastructure running and start the microservices in the correct order.
+
+### Prerequisites
+- **Java 17+** and **Maven**
+- **Node.js 18+** and **npm**
+- **Databases:** MySQL (for User Service) and MongoDB (for Activity and AI Services)
+- **Messaging:** Apache Kafka (with Zookeeper or KRaft)
+- **IAM:** Keycloak (Configured to run on port `8180`)
+
+### Step 1: Start the Infrastructure
+1. Start your local MySQL and MongoDB instances.
+2. Start Apache Kafka and ensure the broker is running.
+3. Start Keycloak on port `8180`, import the required realm, and set up your OAuth2 client credentials.
+
+### Step 2: Start the Backend Microservices
+Because of the distributed architecture, the services **must** be started in the following order. Open separate terminal windows for each:
+
+1. **Config Server** (Provides properties to all other services)
+   ```bash
+   cd config-server
+   mvn spring-boot:run
+   ```
+2. **Discovery Server** (Netflix Eureka)
+   ```bash
+   cd discovery-server
+   mvn spring-boot:run
+   ```
+3. **Gateway & Business Services** (Can be started concurrently once Eureka is up)
+   - Start `gateway` (Port 8080)
+   - Start `UserService` (Port 8081)
+   - Start `ActivityService` (Port 8082)
+   - Start `aiService` (Port 8083)
+
+*Note: You can verify all services are registered by visiting the Eureka dashboard at `http://localhost:8761`.*
+
+### Step 3: Start the Frontend
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Vite development server:
+   ```bash
+   npm run dev
+   ```
+4. Open your browser and navigate to the URL provided by Vite (usually `http://localhost:5173`).
+
+---
+
 ## 📂 Project Structure
 
 ```text
