@@ -29,8 +29,8 @@ public class ActivityAiService {
             log.info("recommendation object created: " + recommendation.toString());
         }
         catch(Exception e){
-            log.error("Failed to parse AI JSON. Creating default recommendation. Error: {}", e.getMessage());
-            recommendation = createDefaultRecommendation();
+            log.error("Failed to parse AI JSON. Error: {}", e.getMessage());
+            throw new RuntimeException("Failed to generate valid recommendation from Gemini", e);
         }
         recommendation.setActivityId(activity.getId());
         recommendation.setUserId(activity.getUserId());
@@ -100,20 +100,6 @@ public class ActivityAiService {
                 metricsString
         );
     }
-    private Recommendation createDefaultRecommendation() {
-        Recommendation.Analysis fallbackAnalysis = new Recommendation.Analysis();
-        fallbackAnalysis.setOverall("Workout logged successfully. AI analysis temporarily unavailable.");
-        fallbackAnalysis.setPace("N/A");
-        fallbackAnalysis.setHeartRate("N/A");
-        fallbackAnalysis.setCaloriesBurned("N/A");
 
-        return Recommendation.builder()
-                .analysis(fallbackAnalysis)
-                .recommendation("Great job completing your workout! Focus on hydration and recovery today.")
-                .improvements(List.of("Maintain consistent pacing.", "Ensure proper stretching."))
-                .safety(List.of("Listen to your body and rest if you feel unusual fatigue."))
-                .suggestions(List.of("Try a light recovery walk tomorrow."))
-                .build();
-    }
 
 }

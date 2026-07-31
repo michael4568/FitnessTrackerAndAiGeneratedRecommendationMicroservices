@@ -68,7 +68,10 @@ public class ActivityService {
     }
 
     public java.util.Map<String, Object> getActivityStats(String userId) {
-        java.util.List<Activity> activities = activityRepository.findByUserId(userId);
+        java.time.LocalDateTime oneWeekAgo = java.time.LocalDateTime.now().minusDays(7);
+        java.util.List<Activity> activities = activityRepository.findByUserId(userId).stream()
+                .filter(a -> a.getStartTime() != null && a.getStartTime().isAfter(oneWeekAgo))
+                .collect(java.util.stream.Collectors.toList());
         int totalWorkouts = activities.size();
         int totalDuration = activities.stream().mapToInt(a -> a.getDuration() != null ? a.getDuration() : 0).sum();
         int totalCalories = activities.stream().mapToInt(a -> a.getCaloriesBurned() != null ? a.getCaloriesBurned() : 0).sum();

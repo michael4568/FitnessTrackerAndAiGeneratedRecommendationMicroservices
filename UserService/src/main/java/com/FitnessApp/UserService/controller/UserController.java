@@ -15,6 +15,7 @@ import com.FitnessApp.UserService.model.UserNote;
 import com.FitnessApp.UserService.model.UserRole;
 import lombok.Data;
 import java.util.List;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
+    @RateLimiter(name = "auth")
     public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest registerRequest){
         UserResponse userResponse = userService.registerUser(registerRequest);
         return ResponseEntity.ok(userResponse);
@@ -40,6 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/sync")
+    @RateLimiter(name = "auth")
     public ResponseEntity<UserResponse> syncUser(
             @RequestHeader("X-User-Id") String userId,
             @RequestHeader("X-User-Email") String email,
@@ -54,22 +57,24 @@ public class UserController {
     }
 
     @PostMapping("/notes")
+    @RateLimiter(name = "notes")
     public ResponseEntity<UserNote> saveNote(
-            @RequestHeader("X-User-Id") String userId,
             @RequestBody UserNoteSaveRequest request) {
-        return ResponseEntity.ok(userService.saveNote(userId, request.getTargetId(), request.getNoteDate(), request.getContent()));
+        return ResponseEntity.ok(userService.saveNote(request.getUserId(), request.getTargetId(), request.getNoteDate(), request.getContent()));
     }
 
     @GetMapping("/notes")
+    @RateLimiter(name = "notes")
     public ResponseEntity<List<UserNote>> getNotes(
-            @RequestHeader("X-User-Id") String userId,
+            @RequestParam("userId") String userId,
             @RequestParam("targetId") String targetId) {
         return ResponseEntity.ok(userService.getNotes(userId, targetId));
     }
 
     @GetMapping("/notes/dates")
+    @RateLimiter(name = "notes")
     public ResponseEntity<List<String>> getNoteDates(
-            @RequestHeader("X-User-Id") String userId) {
+            @RequestParam("userId") String userId) {
         return ResponseEntity.ok(userService.getNoteDates(userId));
     }
 
@@ -93,9 +98,15 @@ public class UserController {
 
     @Data
     public static class UserNoteSaveRequest {
+        private String userId;
         private String targetId;
         private String noteDate;
         private String content;
+    }
+
+    @ExceptionHandler(io.github.resilience4j.ratelimiter.RequestNotPermitted.class)
+    public ResponseEntity<String> handleRateLimitException(io.github.resilience4j.ratelimiter.RequestNotPermitted e) {
+        return ResponseEntity.status(org.springframework.http.HttpStatus.TOO_MANY_REQUESTS).body("Rate limit exceeded");
     }
 }
 

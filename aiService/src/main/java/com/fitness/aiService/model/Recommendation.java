@@ -21,6 +21,8 @@ public class Recommendation {
     private String id;
     private String activityId;
     private String userId;
+    
+    private RecommendationStatus status;
 
     private Analysis analysis;
     private String type;

@@ -72,31 +72,6 @@ public class GeminiService {
                         .filter(throwable -> throwable instanceof WebClientResponseException &&
                                 (((WebClientResponseException) throwable).getStatusCode().value() == 503 ||
                                         ((WebClientResponseException) throwable).getStatusCode().value() == 429)))
-                .onErrorResume(e -> {
-                    log.error("Gemini API call failed. Returning fallback recommendation. Cause: {}", e.getMessage());
-                    String fallbackJson = """
-                            {
-                              "analysis": {
-                                "overall": "Workout logged successfully. AI biomechanical analysis is temporarily unavailable due to high server demand.",
-                                "pace": "N/A",
-                                "heartRate": "N/A",
-                                "caloriesBurned": "N/A"
-                              },
-                              "recommendation": "Great job completing your workout! Focus on hydration and recovery today.",
-                              "improvements": [
-                                "Maintain consistent pacing in your next session.",
-                                "Ensure proper pre-workout stretching and cool-down."
-                              ],
-                              "safety": [
-                                "Listen to your body and rest if you feel unusual fatigue or sharp pain."
-                              ],
-                              "suggestions": [
-                                "Try a light recovery walk or flexibility session tomorrow."
-                              ]
-                            }
-                            """;
-                    return Mono.just(fallbackJson);
-                })
                 .block();
     }
 
@@ -131,7 +106,7 @@ public class GeminiService {
                     .trim();
         } catch (Exception e) {
             log.error("Gemini chatbot query failed: {}", e.getMessage());
-            return "cant help with that try aqsking differnt";
+            throw new RuntimeException("Gemini chatbot query failed", e);
         }
     }
 }

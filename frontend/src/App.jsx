@@ -59,6 +59,10 @@ export default function App() {
   const [activeRecommendation, setActiveRecommendation] = useState(null);
   const [recLoading, setRecLoading] = useState(false);
   const [recError, setRecError] = useState(null);
+  
+  // Rate limiting / UX states
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [recentActivities, setRecentActivities] = useState({});
 
   // Forms states
   const [activityType, setActivityType] = useState('RUNNING');
@@ -105,15 +109,21 @@ export default function App() {
   }, [recChatMessages]);
 
   // Shared fetch helper — attaches all headers the services expect
-  const authFetch = (url, options = {}) => {
+  const authFetch = async (url, options = {}) => {
     const currentToken = token;
-    return fetch(url, {
+    const res = await fetch(url, {
       ...options,
       headers: {
         ...(options.headers || {}),
         'Authorization': `Bearer ${currentToken}`
       }
     });
+    
+    // Automatically redirect to Keycloak if token is invalid or expired
+    if (res.status === 401 && keycloakInstance) {
+      keycloakInstance.login();
+    }
+    return res;
   };
 
   // API Call: Sync User
@@ -272,10 +282,12 @@ export default function App() {
   // API Call: Log New Activity
   const handleAddActivitySubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
     if (!window.confirm("Are you sure you want to add this activity? (Activity logs are permanent and cannot be modified later).")) {
       return;
     }
 
+    setIsSubmitting(true);
     const metricsMap = {};
     customMetrics.forEach(m => {
       if (m.key.trim() && m.value) {
@@ -304,6 +316,23 @@ export default function App() {
       });
 
       if (res.ok) {
+        const addedActivity = await res.json();
+        
+        // Track the exact time this was added to mask the Kafka delay later
+        setRecentActivities(prev => ({
+          ...prev,
+          [addedActivity.id]: Date.now()
+        }));
+
+        // Automatically clear the lock after 8 seconds to re-enable the Open button
+        setTimeout(() => {
+          setRecentActivities(prev => {
+            const next = { ...prev };
+            delete next[addedActivity.id];
+            return next;
+          });
+        }, 8000);
+
         setShowAddModal(false);
         setPage(0);
         fetchActivities();
@@ -314,11 +343,15 @@ export default function App() {
         setStartTime('');
         setCustomMetrics([]);
         setUserCommentary('');
+      } else if (res.status === 429) {
+        alert("You have hit the rate limit for tracking activities (10 per minute). Please wait a moment.");
       } else {
         alert("Failed to save activity details.");
       }
     } catch (err) {
       console.error("Error creating activity", err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -354,6 +387,8 @@ export default function App() {
       if (res.ok) {
         const data = await res.json();
         setActiveRecommendation(data);
+      } else if (res.status === 429) {
+        setRecError("AI rate limit exceeded. Please wait 24 hours or add a custom Gemini API key in the dashboard header.");
       } else {
         setRecError("AI Recommendation service is currently offline or taking longer than usual. Please check back in a few seconds.");
       }
@@ -381,12 +416,21 @@ export default function App() {
           'Content-Type': 'application/json',
           'X-Gemini-API-Key': sessionApiKey
         },
-        body: JSON.stringify({ message: userMessage })
+        body: JSON.stringify({ 
+          userId: user.id,
+          message: userMessage 
+        })
       });
 
       if (res.ok) {
         const data = await res.json();
         setUserChatMessages(prev => [...prev, { sender: 'ai', text: data.response }]);
+      } else if (res.status === 429) {
+        setUserChatMessages(prev => [...prev, { sender: 'system', text: 'AI rate limit exceeded. Please wait 24 hours or add a custom Gemini API key.' }]);
+      } else if (res.status >= 400 && res.status < 500) {
+        setUserChatMessages(prev => [...prev, { sender: 'system', text: 'Invalid request. Please check your Custom Gemini API Key.' }]);
+      } else if (res.status >= 500) {
+        setUserChatMessages(prev => [...prev, { sender: 'system', text: 'AI Service Error. The Gemini API Key may be missing/invalid, or Gemini\'s internal quota is maxed out.' }]);
       } else {
         setUserChatMessages(prev => [...prev, { sender: 'ai', text: 'cant help with that try aqsking differnt' }]);
       }
@@ -423,6 +467,12 @@ export default function App() {
       if (res.ok) {
         const data = await res.json();
         setRecChatMessages(prev => [...prev, { sender: 'ai', text: data.response }]);
+      } else if (res.status === 429) {
+        setRecChatMessages(prev => [...prev, { sender: 'system', text: 'AI rate limit exceeded. Please wait 24 hours or add a custom Gemini API key.' }]);
+      } else if (res.status >= 400 && res.status < 500) {
+        setRecChatMessages(prev => [...prev, { sender: 'system', text: 'Invalid request. Please check your Custom Gemini API Key.' }]);
+      } else if (res.status >= 500) {
+        setRecChatMessages(prev => [...prev, { sender: 'system', text: 'AI Service Error. The Gemini API Key may be missing/invalid, or Gemini\'s internal quota is maxed out.' }]);
       } else {
         setRecChatMessages(prev => [...prev, { sender: 'ai', text: 'cant help with that try aqsking differnt' }]);
       }
@@ -433,11 +483,11 @@ export default function App() {
     }
   };
 
-  // API Call: Fetch Notepad Dates
+  // API Call: Fetch Note Dates
   const fetchNotesDates = async () => {
-    if (!user?.id) return;
+    if (!user || !user.id) return;
     try {
-      const res = await authFetch(`${API_BASE}/api/user/notes/dates`);
+      const res = await authFetch(`${API_BASE}/api/user/notes/dates?userId=${user.id}`);
       if (res.ok) {
         const data = await res.json();
         setNotesDates(data);
@@ -447,12 +497,13 @@ export default function App() {
     }
   };
 
-  // API Call: Fetch Note content for activeNoteDate
+  // API Call: Fetch Single Personal Note
   const handleSelectNoteDate = async (date) => {
     setActiveNoteDate(date);
+    if (!user || !user.id) return;
     setNoteText('');
     try {
-      const res = await authFetch(`${API_BASE}/api/user/notes?targetId=general`);
+      const res = await authFetch(`${API_BASE}/api/user/notes?userId=${user.id}&targetId=general`);
       if (res.ok) {
         const data = await res.json();
         const found = data.find(n => n.noteDate === date);
@@ -467,12 +518,13 @@ export default function App() {
 
   // API Call: Save Personal Note
   const handleSavePersonalNote = async () => {
-    if (!activeNoteDate) return;
+    if (!activeNoteDate || !user || !user.id) return;
     try {
       const res = await authFetch(`${API_BASE}/api/user/notes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          userId: user.id,
           targetId: 'general',
           noteDate: activeNoteDate,
           content: noteText
@@ -489,9 +541,10 @@ export default function App() {
 
   // API Call: Fetch Note for Recommendation
   const fetchRecNote = async (activityId, date) => {
+    if (!user || !user.id) return;
     setRecNoteText('');
     try {
-      const res = await authFetch(`${API_BASE}/api/user/notes?targetId=${activityId}`);
+      const res = await authFetch(`${API_BASE}/api/user/notes?userId=${user.id}&targetId=${activityId}`);
       if (res.ok) {
         const data = await res.json();
         const found = data.find(n => n.noteDate === date);
@@ -506,12 +559,13 @@ export default function App() {
 
   // API Call: Save Recommendation Note
   const handleSaveRecNote = async () => {
-    if (!activeActivity) return;
+    if (!activeActivity || !user || !user.id) return;
     try {
       const res = await authFetch(`${API_BASE}/api/user/notes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          userId: user.id,
           targetId: activeActivity.id,
           noteDate: recNoteDate,
           content: recNoteText
@@ -851,9 +905,10 @@ export default function App() {
                               <td className="py-4 px-4 text-right">
                                 <button 
                                   onClick={() => openActivityDetails(a)}
-                                  className="px-3 py-1.5 rounded-lg text-xs font-bold text-orange-400 hover:text-white bg-orange-500/10 hover:bg-orange-500 border border-orange-500/20 transition cursor-pointer"
+                                  disabled={recentActivities[a.id]}
+                                  className="px-3 py-1.5 rounded-lg text-xs font-bold text-orange-400 hover:text-white bg-orange-500/10 hover:bg-orange-500 border border-orange-500/20 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                  Open
+                                  {recentActivities[a.id] ? 'AI Analyzing...' : 'Open'}
                                 </button>
                               </td>
                             </tr>
@@ -933,11 +988,13 @@ export default function App() {
                       value={userChatInput}
                       onChange={(e) => setUserChatInput(e.target.value)}
                       required
-                      className="flex-1 bg-white/[0.04] border border-white/5 rounded-xl px-4 py-3 text-sm text-gray-300 focus:outline-none focus:border-emerald-500/50"
+                      disabled={userChatLoading}
+                      className="flex-1 bg-white/[0.04] border border-white/5 rounded-xl px-4 py-3 text-sm text-gray-300 focus:outline-none focus:border-emerald-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                     <button 
                       type="submit" 
-                      className="p-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white transition shrink-0 cursor-pointer"
+                      disabled={userChatLoading}
+                      className="p-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white transition shrink-0 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <Send className="h-4 w-4" />
                     </button>
@@ -1233,9 +1290,10 @@ export default function App() {
                 </button>
                 <button 
                   type="submit"
-                  className="px-5 py-2 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 font-bold text-white rounded-xl text-sm transition shadow-lg shadow-orange-500/10 cursor-pointer"
+                  disabled={isSubmitting}
+                  className="px-5 py-2 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 font-bold text-white rounded-xl text-sm transition shadow-lg shadow-orange-500/10 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Log Activity
+                  {isSubmitting ? 'Logging...' : 'Log Activity'}
                 </button>
               </footer>
             </form>
@@ -1420,13 +1478,13 @@ export default function App() {
                       value={recChatInput}
                       onChange={(e) => setRecChatInput(e.target.value)}
                       required
-                      disabled={!activeRecommendation}
-                      className="flex-1 bg-white/[0.04] border border-white/5 rounded-xl px-3.5 py-2 text-xs text-gray-300 focus:outline-none focus:border-orange-500/30"
+                      disabled={!activeRecommendation || recChatLoading}
+                      className="flex-1 bg-white/[0.04] border border-white/5 rounded-xl px-3.5 py-2 text-xs text-gray-300 focus:outline-none focus:border-orange-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                     <button 
                       type="submit" 
-                      disabled={!activeRecommendation}
-                      className="p-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white transition shrink-0 disabled:opacity-30 cursor-pointer"
+                      disabled={!activeRecommendation || recChatLoading}
+                      className="p-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white transition shrink-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                     >
                       <Send className="h-3.5 w-3.5" />
                     </button>
