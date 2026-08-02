@@ -56,55 +56,103 @@ To facilitate developer integration and testing, **Swagger UI** (via `springdoc-
 
 ## 🚀 Local Development Setup
 
-To run this project locally, ensure you have the required infrastructure running and start the microservices in the correct order.
+This entire microservice ecosystem has been fully containerized. To make local testing as painless as possible, **all services have been pre-built and pushed to Docker Hub** under the `rashad2210` repository. You can choose to run the entire stack via Docker, or run the infrastructure via Docker and the services locally (non-dockerized).
 
 ### Prerequisites
-- **Java 17+** and **Maven**
-- **Node.js 18+** and **npm**
-- **Databases:** MySQL (for User Service) and MongoDB (for Activity and AI Services)
-- **Messaging:** Apache Kafka (with Zookeeper or KRaft)
-- **IAM:** Keycloak (Configured to run on port `8180`)
+- **Docker** and **Docker Compose** installed on your machine.
+- **Java 17+** and **Maven** (If using the non-dockerized setup).
+- **Node.js 18+** and **npm** (If using the non-dockerized setup).
+- A free **Google Gemini API Key** (for the AI Service). *Note: The Gemini key can also be provided directly through the frontend UI if you want to see how the default key is working!*
+- **Databases**: Ensure you have local instances of MySQL (`localhost:3306`) and MongoDB (`localhost:27017`) running.
 
-### Step 1: Start the Infrastructure
-1. Start your local MySQL and MongoDB instances.
-2. Start Apache Kafka and ensure the broker is running.
-3. Start Keycloak on port `8180`, import the required realm, and set up your OAuth2 client credentials.
+### Step 1: Start the Core Infrastructure (Kafka & Keycloak)
 
-### Step 2: Start the Backend Microservices
-Because of the distributed architecture, the services **must** be started in the following order. Open separate terminal windows for each:
+Instead of installing heavy infrastructure manually, you can run Kafka and an in-memory Keycloak (which requires no database setup) via Docker. 
 
-1. **Config Server** (Provides properties to all other services)
+Run the following commands in your terminal to pull the images and start them:
+
+**1. Pull the images:**
+```bash
+docker pull quay.io/keycloak/keycloak:latest
+docker pull bitnami/kafka:latest
+```
+
+**2. Start an In-Memory Keycloak:**
+```bash
+docker run -d --name keycloak-memory -p 8180:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin123 quay.io/keycloak/keycloak:latest start-dev
+```
+*(Once booted, go to `http://localhost:8180` and login with `admin/admin123`. The `fitness-realm` gets created automatically by our code—you just need to switch to it from the `master` realm dropdown in the UI!)*
+
+**3. Start Apache Kafka (KRaft mode):**
+```bash
+docker run -d --name kafka -p 9092:9092 -e KAFKA_ENABLE_KRAFT=yes -e KAFKA_CFG_PROCESS_ROLES=broker,controller -e KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER -e KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093 -e KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT -e KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092 -e KAFKA_BROKER_ID=1 -e KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@127.0.0.1:9093 -e ALLOW_PLAINTEXT_LISTENER=yes bitnami/kafka:latest
+```
+
+### Step 2: Set your Gemini API Key
+
+The application requires a Gemini API key. The key provided via the terminal acts as the **default key**. However, if you provide a key directly through the frontend UI, that key will become **active** and override the default one! 
+
+Before starting the microservices, export your default Gemini API key:
+
+**Windows (PowerShell):**
+```powershell
+$env:GEMINI_API_KEY="your_api_key_here"
+```
+**Mac/Linux:**
+```bash
+export GEMINI_API_KEY="your_api_key_here"
+```
+
+### Step 3: Spin up the Services
+
+You have two choices for running the services:
+
+#### Option A: Fully Dockerized Setup (Recommended)
+Since all services are already published to Docker Hub, you can launch the entire ecosystem with a single command!
+
+1. Pull the pre-built microservice images (optional, docker-compose will do this automatically):
    ```bash
-   cd config-server
+   docker pull rashad2210/config-service:latest
+   docker pull rashad2210/eureka-server:latest
+   docker pull rashad2210/gateway-service:latest
+   docker pull rashad2210/user-service:latest
+   docker pull rashad2210/activity-service:latest
+   docker pull rashad2210/ai-service:latest
+   docker pull rashad2210/frontend:latest
+   ```
+2. Navigate to the root directory where the `docker-compose.yml` file is located, and run:
+   ```bash
+   docker-compose up -d
+   ```
+   *Docker will automatically boot the Discovery and Config servers first, wait 15-30 seconds, and then successfully launch all business microservices and the React frontend.*
+
+#### Option B: Non-Dockerized Setup (For Active Development)
+If you want to run the Java Spring Boot services and the React frontend locally (while keeping Kafka and Keycloak in Docker):
+
+1. **Config Server** (Must be started first! Wait ~10 seconds for it to boot)
+   ```bash
+   cd configService
    mvn spring-boot:run
    ```
-2. **Discovery Server** (Netflix Eureka)
+2. **Discovery Server** (Netflix Eureka. Wait ~10 seconds for it to boot)
    ```bash
-   cd discovery-server
+   cd eureka
    mvn spring-boot:run
    ```
 3. **Gateway & Business Services** (Can be started concurrently once Eureka is up)
-   - Start `gateway` (Port 8080)
-   - Start `UserService` (Port 8081)
-   - Start `ActivityService` (Port 8082)
-   - Start `aiService` (Port 8083)
+   - Start `gateway` (Port 8080): `cd gateway && mvn spring-boot:run`
+   - Start `UserService` (Port 8081): `cd UserService && mvn spring-boot:run`
+   - Start `ActivityService` (Port 8082): `cd ActivityService && mvn spring-boot:run`
+   - Start `aiService` (Port 8083): `cd aiService && mvn spring-boot:run`
 
-*Note: You can verify all services are registered by visiting the Eureka dashboard at `http://localhost:8761`.*
-
-### Step 3: Start the Frontend
-1. Navigate to the frontend directory:
+4. **Start the Frontend**
    ```bash
    cd frontend
-   ```
-2. Install dependencies:
-   ```bash
    npm install
-   ```
-3. Start the Vite development server:
-   ```bash
    npm run dev
    ```
-4. Open your browser and navigate to the URL provided by Vite (usually `http://localhost:5173`).
+
+*Note: You can verify all services are registered by visiting the Eureka dashboard at `http://localhost:8761`. You can access the frontend at `http://localhost:5173` (for non-dockerized) or `http://localhost:80` (for dockerized).*
 
 ---
 

@@ -12,15 +12,15 @@ spring:
         webflux:
           routes:
             - id: user-service
-              uri: lb://USER-SERVICE
+              uri: ${USER_SERVICE_URI:lb://USER-SERVICE}
               predicates:
                 - Path=/api/user/**
             - id: activity-service
-              uri: lb://ACTIVITY-SERVICE
+              uri: ${ACTIVITY_SERVICE_URI:lb://ACTIVITY-SERVICE}
               predicates:
                 - Path=/api/activities/**
             - id: ai-service
-              uri: lb://AI-SERVICE
+              uri: ${AI_SERVICE_URI:lb://AI-SERVICE}
               predicates:
                 - Path=/api/recommendations/**
   security:
@@ -30,12 +30,12 @@ spring:
           jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:8180/realms/fitness-realm/protocol/openid-connect/certs}
 
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
 logging:
   level:
     root: DEBUG

@@ -1,0 +1,114 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # Core Spring Cloud Services
+  # ==========================================
+  eureka-server:
+    image: rashad2210/eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - fitness-network
+
+  config-service:
+    image: rashad2210/config-service:latest
+    container_name: config-service
+    # Wait 15 seconds to give Eureka time to boot up
+    entrypoint: ["sh", "-c", "sleep 15 && java -jar app.jar"]
+    ports:
+      - "8888:8888"
+    environment:
+      - EUREKA_URL=http://eureka-server:8761/eureka/
+    networks:
+      - fitness-network
+    depends_on:
+      - eureka-server
+
+  # ==========================================
+  # Microservices
+  # ==========================================
+  user-service:
+    image: rashad2210/user-service:latest
+    container_name: user-service
+    # Wait 30 seconds to give Eureka and Config time to boot up
+    entrypoint: ["sh", "-c", "sleep 30 && java -jar app.jar"]
+    ports:
+      - "8081:8081"
+    environment:
+      - CONFIG_SERVER_URL=http://config-service:8888
+      - DB_URL=jdbc:mysql://host.docker.internal:3306/fitnessapp_user?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - EUREKA_URL=http://eureka-server:8761/eureka/
+    networks:
+      - fitness-network
+    depends_on:
+      - config-service
+      - eureka-server
+
+  activity-service:
+    image: rashad2210/activity-service:latest
+    container_name: activity-service
+    # Wait 30 seconds to give Eureka and Config time to boot up
+    entrypoint: ["sh", "-c", "sleep 30 && java -jar app.jar"]
+    ports:
+      - "8082:8082"
+    environment:
+      - CONFIG_SERVER_URL=http://config-service:8888
+      - MONGO_URI=mongodb://host.docker.internal:27017/fitness_activity_db
+      - KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:9092
+      - EUREKA_URL=http://eureka-server:8761/eureka/
+    networks:
+      - fitness-network
+    depends_on:
+      - config-service
+      - eureka-server
+
+  ai-service:
+    image: rashad2210/ai-service:latest
+    container_name: ai-service
+    # Wait 30 seconds to give Eureka and Config time to boot up
+    entrypoint: ["sh", "-c", "sleep 30 && java -jar app.jar"]
+    ports:
+      - "8083:8083"
+    environment:
+      - CONFIG_SERVER_URL=http://config-service:8888
+      - MONGO_URI=mongodb://host.docker.internal:27017/recommendation_activity_db
+      - KAFKA_BOOTSTRAP_SERVERS=host.docker.internal:9092
+      - EUREKA_URL=http://eureka-server:8761/eureka/
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-} 
+    networks:
+      - fitness-network
+    depends_on:
+      - config-service
+      - eureka-server
+
+  gateway-service:
+    image: rashad2210/gateway-service:latest
+    container_name: gateway-service
+    # Wait 30 seconds to give Eureka time to boot up
+    entrypoint: ["sh", "-c", "sleep 30 && java -jar app.jar"]
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_URL=http://eureka-server:8761/eureka/
+      # host.docker.internal points to your standalone Keycloak container on port 8180
+      - KEYCLOAK_JWK_SET_URI=http://host.docker.internal:8180/realms/fitness-realm/protocol/openid-connect/certs
+    networks:
+      - fitness-network
+    depends_on:
+      - eureka-server
+
+  frontend:
+    image: rashad2210/frontend:latest
+    container_name: frontend
+    ports:
+      - "80:80"
+    networks:
+      - fitness-network
+
+networks:
+  fitness-network:
+    driver: bridge
